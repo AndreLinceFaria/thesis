@@ -1,0 +1,148 @@
+[
+	{
+		"name":"PSD",
+		"username":"ppdpsd",
+		"users":[
+			{
+				"name":"Pedro Passos Coelho",
+				"username":"passoscoelho"
+			},
+			{
+				"name":"José Pedro Aguiar Branco",
+				"username":"aguiarbranco"
+			},
+			{
+				"name":"Antonio Leitao Amaro",
+				"username":"Leitao_Amaro"
+			},
+			{
+				"name":"Pedro Pimpao",
+				"username":"ppimpao"
+			},
+			{
+				"name":"Duarte Marques",
+				"username":"DuarteMarques"
+			},
+			{
+				"name":"Carlos Coelho",
+				"username":"CarlosCoelhoPE"
+			}
+		]
+	},
+	{
+		"name":"PS",
+		"username":"psocialista",
+		"users":[
+			{
+				"name":"Joao Galamba",
+				"username":"Joaogalamba"
+			},
+			{
+				"name":"Ana Gomes",
+				"username":"AnaGomesMEP"
+			},
+			{
+				"name":"Antonio Costa",
+				"username":"antoniocostapm"
+			},
+			{
+				"name":"Fernado Medina",
+				"username":"FMedina_PCML"
+			},
+			{
+				"name":"Pedro Nuno Santos",
+				"username":"pnsantos_seap"
+			},
+			{
+				"name":"Tiago Barbosa Ribeiro",
+				"username":"tbribeiro"
+			},
+			{
+				"name":"Andre Pinotes Batista",
+				"username":"aapbatista"
+			}
+		]
+	},
+	{
+		"name":"CDS-PP",
+		"username":"_CDSPP",
+		"users":[
+			{
+				"name":"Jose Ribeiro e Castro",
+				"username":"ribeiroecastro"
+			},
+			{
+				"name":"Assuncao Cristas",
+				"username":"CristasAssuncao"
+			},
+			{
+				"name":"Telmo Correia",
+				"username":"Telmo_Correia"
+			},
+			{
+				"name":"Helder Amaral",
+				"username":"helderamaralcds"
+			},
+			{
+				"name":"Diogo Feio",
+				"username":"diogo_feio"
+			}
+		]
+	},
+	{
+		"name":"BE",
+		"username":"",
+		"users":[
+			{
+				"name":"Catarina Martins",
+				"username":"catarina_mart"
+			},
+			{
+				"name":"Marisa Matias",
+				"username":"mmatias_"
+			},
+			{
+				"name":"Joana Mortagua",
+				"username":"JoanaMortagua"
+			},
+			{
+				"name":"Mariana Mortagua",
+				"username":"MRMortagua"
+			},
+			{
+				"name":"Pedro Filipe Soares",
+				"username":"PedroFgSoares"
+			}
+		]
+	},
+	{
+		"name":"PAN",
+		"username":"Partido_PAN",
+		"users":[]
+	},
+	{
+		"name":"PCP",
+		"username": "_pcp_",
+		"users":[
+			{
+				"name":"PCP Aveiro",
+				"username":"PCP_Aveiro"
+			},
+			{
+				"name":"Bruno Dias",
+				"username":"brunoramosdias"
+			},
+			{
+				"name":"Antonio Filipe",
+				"username":"AntonioFilipe"
+			}
+		]
+	},
+	{
+		"name":"PEV",
+		"username":"OsVerdes",
+		"users":[
+
+		]
+	}
+]

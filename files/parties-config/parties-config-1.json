@@ -1,0 +1,55 @@
+[
+	{
+		"label" : "PS",
+		"parties" : [
+			"PS","PS-JPP","PS-BE-JPP-PDR-NC","L-PS","JPP","PDR.JPP"
+		]
+	},
+	{
+		"label" : "PPD/PSD",
+		"parties" : [
+			"PPD/PSD","PPD/PSD.CDS-PP","PPD/PSD.CDS-PP.MPT.PPM","PPD/PSD.CDS-PP.PPM",
+			"PPD/PSD.PPM","PPD/PSD.CDS-PP.MPT.PPM.PPV/DC","PPD/PSD.MPT","PPD/PSD.CDS-PP.MPT",
+			"PPD/PSD.NC","PPD/PSD.MPT.PPM","PPV/CDC.PPM","PPV/CDC"
+		]
+	},
+	{
+		"label" : "CDS-PP",
+		"parties" : [
+			"CDS-PP","CDS-PP.MPT.PPM","CDS-PP.PPM","CDS-PP.PPD/PSD.MPT.PPM","CDS-PP.NC",
+			"CDS-PP.PPD/PSD","CDS-PP.MPT","CDS-PP.NC.PPM","CDS-PP.PPD/PDS.PPM"
+		]
+	},
+	{
+		"label" : "B.E.",
+		"parties" : [
+			"B.E."
+		]
+	},
+	{
+		"label" : "PAN",
+		"parties" : [
+			"PAN"
+		]
+	},
+	{
+		"label" : "PCP-PEV",
+		"parties" : [
+			"PCP-PEV"
+		]
+	},
+	{
+		"label" : "GRUPO CIDADAOS",
+		"parties" : [
+			"GRUPO CIDADAOS"
+		]
+	},
+	{
+		"label" : "Outros",
+		"parties" : [
+			"PCTP/MRPP", "PTP", "PNR", "PDR.JPP", "MPT", "PDR", "MPT.PPV/CDC", "PPM.PURP", "L",
+			"MAS","PURP","PPM","NC"
+		]
+	}
+
+]
