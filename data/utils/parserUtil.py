@@ -2,13 +2,14 @@ from parsers import ParserCSV, ParserJSON
 
 results = '././files/autarquicas17-resultados.csv'
 config = '././files/parties-config/parties-config-1.json'
+parties_twitter = '././files/parties-config/parties-twitter.json'
 
 
 class ResultsParser():
 
     def __init__(self, filenameResults = results, filenameConfig = config):
         self.pconfig = PartiesConfig(filenameConfig)
-        self.parser = ParserCSV(results)
+        self.parser = ParserCSV(filenameResults)
         self.results = []
         self.setup()
 
@@ -86,4 +87,29 @@ class Config():
         return self.parties
 
 
+class PartiesTwitterParser():
 
+    def __init__(self,filename=parties_twitter):
+        self.parser = ParserJSON(file=filename)
+        self.parties = []
+        self.setup()
+
+    def setup(self):
+        parties = self.parser.getJsonData()
+        for party in parties:
+            pobj = Party(party['name'],party['username'])
+            for user in party['users']:
+                pobj.pusers.append(PartyUser(user['name'],user['username']))
+            self.parties.append(pobj)
+
+class Party():
+    def __init__(self, pname, pusername):
+        self.pname = pname
+        self.pusername = pusername
+        self.pusers = []
+
+
+class PartyUser:
+    def __init__(self, name, username):
+        self.name = name
+        self.username = username

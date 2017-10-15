@@ -6,6 +6,7 @@ import re
 import urllib
 import urllib2
 
+import sys
 from pyquery import PyQuery
 
 from .. import models
@@ -19,6 +20,7 @@ class TweetManager:
 
     @staticmethod
     def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None):
+        count = 0
         refreshCursor = ''
         results = []
         resultsAux = []
@@ -72,6 +74,11 @@ class TweetManager:
 
                 results.append(tweet)
                 resultsAux.append(tweet)
+
+                sys.stdout.write('\rGetting tweet: ' + str(tweet.id) + ' Fetched tweets: '+str(count))
+                sys.stdout.flush()
+                count += 1
+
                 logger.debug("Tweet added: " +  str(tweet.id))
                 logger.debug("Nr Tweets: " +  str(len(results)))
 
@@ -86,7 +93,7 @@ class TweetManager:
 
         if receiveBuffer and len(resultsAux) > 0:
             receiveBuffer(resultsAux)
-        print("Total tweets fetched: " + str(len(results)))
+        #print("Total tweets fetched: " + str(len(results)))
         return results
 
     @staticmethod
@@ -106,10 +113,12 @@ class TweetManager:
             urlGetData += "&near:" + tweetCriteria.near + " within:" + tweetCriteria.within
 
         if hasattr(tweetCriteria, 'since'):
-            urlGetData += ' since:' + tweetCriteria.since
+            if tweetCriteria.since != None:
+                urlGetData += ' since:' + tweetCriteria.since
 
         if hasattr(tweetCriteria, 'until'):
-            urlGetData += ' until:' + tweetCriteria.until
+            if tweetCriteria.until != None:
+                urlGetData += ' until:' + tweetCriteria.until
 
 
         if hasattr(tweetCriteria, 'topTweets'):

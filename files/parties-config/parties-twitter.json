@@ -26,7 +26,16 @@
 			{
 				"name":"Carlos Coelho",
 				"username":"CarlosCoelhoPE"
+			},
+                        {
+				"name":"Jorge Bacelar Gouveia",
+				"username":"JBacelarGouveia"
+			},
+                        {
+				"name":"Pedro Santana Lopes",
+				"username":"PSantanaLopes"
 			}
+
 		]
 	},
 	{
@@ -60,6 +69,10 @@
 			{
 				"name":"Andre Pinotes Batista",
 				"username":"aapbatista"
+			},
+			{
+				"name":"JS Lisboa",
+				"username":"JSLisboa"
 			}
 		]
 	},
@@ -91,7 +104,7 @@
 	},
 	{
 		"name":"BE",
-		"username":"",
+		"username":"@EsquerdaNet",
 		"users":[
 			{
 				"name":"Catarina Martins",
@@ -118,10 +131,23 @@
 	{
 		"name":"PAN",
 		"username":"Partido_PAN",
-		"users":[]
+		"users":[
+			{
+				"name":"PAN",
+				"username":"Partido_PAN"
+			},
+			{
+				"name":"André Nunes",
+				"username":"nunoandrebnunes"
+			},
+			{
+				"name":"Filipe Pimentel",
+				"username":"ftpimentel"
+			}
+		]
 	},
 	{
-		"name":"PCP",
+		"name":"PCP-PEV",
 		"username": "_pcp_",
 		"users":[
 			{
@@ -135,14 +161,26 @@
 			{
 				"name":"Antonio Filipe",
 				"username":"AntonioFilipe"
+			},
+                        {
+				"name":"Abril Novo Magazine",
+				"username":"abrildenovo"
+			},
+                        {
+				"name":"Miguel Tiago",
+				"username":"migueltiago"
+			},
+                        {
+				"name":"CDU PCP-PEV",
+				"username":"CDUPCPPEV"
+			},
+                        {
+				"name":"José M Gonçalves (CDU)",
+				"username":"JMRGoncalves1"
+			},{
+				"name":"Os Verdes",
+				"username":"OsVerdes"
 			}
-		]
-	},
-	{
-		"name":"PEV",
-		"username":"OsVerdes",
-		"users":[
-
 		]
 	}
 ]

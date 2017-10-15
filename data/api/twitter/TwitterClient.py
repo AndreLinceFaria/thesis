@@ -1,4 +1,4 @@
-import logging
+import logging, sys
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -11,28 +11,32 @@ session = database.getSession()
 
 class TwitterClient():
 
-    def __init__(self, startDate = '2017-08-20', endDate = '2017-09-30', country = 'portugal', tweetCount = 0, query='geocode:39.673370,-8.283691,306km AND lang:pt'):
+    def __init__(self, startDate = '2017-08-20', endDate = '2017-09-30', country = 'portugal', tweetCount = 0, query='geocode:39.673370,-8.283691,306km AND lang:pt', username=None):
         self.startDate = startDate
         self.endDate = endDate
         self.country = country
         self.tweetCount = tweetCount
         self.query = query
+        self.username = username
 
     def getTweetsAndSave(self):
-        print("Getting tweets from " + str(self.startDate) + " ...")
+        if self.startDate != None:
+            print("\nGetting tweets since " + str(self.startDate) + " ...")
         logger.debug("TwitterClient is running...")
         tweets = self.getTweets()
 
-        print("Saving fetched tweets to db...")
+        print("\nSaving fetched tweets to db...")
         tcount = 0
         if len(tweets) > 0:
             for t in tweets:
                 logger.debug("Tweet: " + t.id)
+                sys.stdout.write("\rSaving tweets " + str(tcount))
+                sys.stdout.flush()
                 self.saveTweet(t)
                 tcount += 1
         else:
-            print("No tweets returned.")
-        print("Total tweets saved: " + str(tcount))
+            print("\nNo tweets returned.")
+        #print("Total tweets saved: " + str(tcount))
 
     def saveTweet(self, t):
         try:
@@ -59,11 +63,15 @@ class TwitterClient():
             session.commit()
 
     def getTweets(self):
-        tweetCriteria = TweetCriteria().setQuerySearch(
-            self.query).setSince(self.startDate).setUntil(
-            self.endDate).setMaxTweets(self.tweetCount)
+        if self.username==None:
+            tweetCriteria = TweetCriteria().setQuerySearch(
+                self.query).setSince(self.startDate).setUntil(
+                self.endDate).setMaxTweets(self.tweetCount)
+        else:
+            tweetCriteria = TweetCriteria().setUsername(self.username).setSince(self.startDate).setUntil(
+                self.endDate).setMaxTweets(self.tweetCount)
         tweets = TweetManager.getTweets(tweetCriteria)
-        print("Number of tweets fetched: " + str(len(tweets)))
+        #print("Number of tweets fetched: " + str(len(tweets)))
         return tweets
 
 
@@ -78,3 +86,6 @@ class TwitterClient():
 
     def setTweetCount(self, tweetCount):
         self.tweetCount = tweetCount
+
+    def setUsername(self, username):
+        self.username = username
