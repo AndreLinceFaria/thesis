@@ -3,7 +3,7 @@ import logging, sys
 from sqlalchemy.orm.exc import NoResultFound
 
 from data.database import database as database
-from data.database.database import Tweet, TwitterUser
+from data.database.database import Tweet, TwitterUser, TweetParty
 from got.manager import TweetManager, TweetCriteria
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ class TwitterClient():
 
     def getTweetsAndSave(self):
         if self.startDate != None:
-            print("\nGetting tweets since " + str(self.startDate) + " ...")
+            print("\nGetting tweets since " + str(self.startDate) + " until " + str(self.endDate) + "...")
         logger.debug("TwitterClient is running...")
         tweets = self.getTweets()
 
@@ -40,7 +40,10 @@ class TwitterClient():
 
     def saveTweet(self, t):
         try:
-            query = session.query(Tweet).filter(Tweet.tweetId==t.id).one()
+            if self.username==None: #timeline
+                query = session.query(Tweet).filter(Tweet.tweetId==t.id).one()
+            else:
+                query = session.query(TweetParty).filter(TweetParty.tweetId == t.id).one()
         except NoResultFound:
             try:
                 query = session.query(TwitterUser).filter(TwitterUser.username == t.username).one()
@@ -48,17 +51,30 @@ class TwitterClient():
                 user = TwitterUser(username=t.username)
                 session.add(user)
 
-            #session.commit()
-            tweet = Tweet(tweetId=t.id,
-                            permalink=t.permalink,
-                            username=t.username,
-                            text=t.text,
-                            date=t.date,
-                            retweets=t.retweets,
-                            favorites=t.favorites,
-                            mentions=t.mentions,
-                            hashtags=t.hashtags,
-                            geo=t.geo)
+            if self.username==None:
+                print("Save timeline tweet")
+                tweet = Tweet(tweetId=t.id,
+                                permalink=t.permalink,
+                                username=t.username,
+                                text=t.text,
+                                date=t.date,
+                                retweets=t.retweets,
+                                favorites=t.favorites,
+                                mentions=t.mentions,
+                                hashtags=t.hashtags,
+                                geo=t.geo)
+            else:
+                print("Save username tweet")
+                tweet = TweetParty(tweetId=t.id,
+                              permalink=t.permalink,
+                              username=t.username,
+                              text=t.text,
+                              date=t.date,
+                              retweets=t.retweets,
+                              favorites=t.favorites,
+                              mentions=t.mentions,
+                              hashtags=t.hashtags,
+                              geo=t.geo)
             session.add(tweet)
             session.commit()
 

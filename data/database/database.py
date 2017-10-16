@@ -21,6 +21,19 @@ class Tweet(Base):
     hashtags = Column(Text)
     geo = Column(String)
 
+class TweetParty(Base):
+    __tablename__ = 'tweet_party'
+    tweetId = Column(Integer, primary_key=True, autoincrement=True)
+    permalink = Column(Text)
+    username = Column(String, ForeignKey('twitter_user.username'))
+    text = Column(Text)
+    date = Column(DateTime)
+    retweets = Column(Integer)
+    favorites = Column(Integer)
+    mentions = Column(Text)
+    hashtags = Column(Text)
+    geo = Column(String)
+
 class TweetParsed(Base):
     __tablename__ = 'tweet_parsed'
     tweetId = Column(Integer, ForeignKey('tweet.tweetId'), primary_key=True)
