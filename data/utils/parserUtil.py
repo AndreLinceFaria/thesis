@@ -97,9 +97,9 @@ class PartiesTwitterParser():
     def setup(self):
         parties = self.parser.getJsonData()
         for party in parties:
-            pobj = Party(party['name'],party['username'])
+            pobj = Party(party['name'].encode('utf-8'),party['username'].encode('utf-8'))
             for user in party['users']:
-                pobj.pusers.append(PartyUser(user['name'],user['username']))
+                pobj.pusers.append(PartyUser(user['name'].encode('utf-8'),user['username'].encode('utf-8')))
             self.parties.append(pobj)
 
 class Party():
