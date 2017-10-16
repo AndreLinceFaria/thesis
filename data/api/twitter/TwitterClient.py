@@ -19,11 +19,11 @@ class TwitterClient():
         self.query = query
         self.username = username
 
-    def getTweetsAndSave(self):
+    def getTweetsAndSave(self, proxy=None):
         if self.startDate != None:
             print("\nGetting tweets since " + str(self.startDate) + " until " + str(self.endDate) + "...")
         logger.debug("TwitterClient is running...")
-        tweets = self.getTweets()
+        tweets = self.getTweets(proxy)
 
         print("\nSaving fetched tweets to db...")
         tcount = 0
@@ -78,7 +78,7 @@ class TwitterClient():
             session.add(tweet)
             session.commit()
 
-    def getTweets(self):
+    def getTweets(self, proxy):
         if self.username==None:
             tweetCriteria = TweetCriteria().setQuerySearch(
                 self.query).setSince(self.startDate).setUntil(
@@ -86,8 +86,10 @@ class TwitterClient():
         else:
             tweetCriteria = TweetCriteria().setUsername(self.username).setSince(self.startDate).setUntil(
                 self.endDate).setMaxTweets(self.tweetCount)
-        tweets = TweetManager.getTweets(tweetCriteria)
-        #print("Number of tweets fetched: " + str(len(tweets)))
+
+
+        tweets = TweetManager.getTweets(tweetCriteria=tweetCriteria, proxy=proxy)
+
         return tweets
 
 

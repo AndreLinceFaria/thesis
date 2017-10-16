@@ -3,8 +3,6 @@ import datetime
 import json
 import logging
 import re
-import urllib
-import urllib2
 
 import sys
 from pyquery import PyQuery
@@ -126,6 +124,24 @@ class TweetManager:
                 url = "https://twitter.com/i/search/timeline?q=%s&src=typd&max_position=%s"
 
 
+        import socket
+        import socks  #pip install pysocks
+        if proxy:
+            #print("############\n Using TOR proxy \n###########")
+            # Configuration
+            SOCKS5_PROXY_HOST = '127.0.0.1'
+            SOCKS5_PROXY_PORT = 9150
+
+            # Remove this if you don't plan to "deactivate" the proxy later
+            default_socket = socket.socket
+
+            # Set up a proxy
+            socks.set_default_proxy(socks.SOCKS5, SOCKS5_PROXY_HOST, SOCKS5_PROXY_PORT)
+            socket.socket = socks.socksocket
+
+
+        import urllib
+        import urllib2
 
         url = url % (urllib.quote(urlGetData), refreshCursor)
 
@@ -138,19 +154,25 @@ class TweetManager:
             ('Referer', url),
             ('Connection', "keep-alive")
         ]
-
+        '''
         if proxy:
             opener = urllib2.build_opener(urllib2.ProxyHandler({'http': proxy, 'https': proxy}), urllib2.HTTPCookieProcessor(cookieJar))
         else:
-            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookieJar))
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookieJar))'''
+
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookieJar))
         opener.addheaders = headers
 
         try:
             response = opener.open(url)
             jsonResponse = response.read()
         except:
-            raise ValueError("Twitter weird response. Try to see on browser: https://twitter.com/search?q=%s&src=typd" % urllib.quote(urlGetData))
+            raise ValueError("\nTwitter weird response. Try to see on browser: https://twitter.com/search?q=%s&src=typd" % urllib.quote(urlGetData))
 
         dataJson = json.loads(jsonResponse)
+
+        #return to default socket
+        if proxy:
+            socket.socket = default_socket
 
         return dataJson

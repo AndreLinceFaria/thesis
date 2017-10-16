@@ -1,5 +1,7 @@
 from datetime import date, datetime, timedelta, time
-from sys import stdout
+from sys import stdout,argv
+
+import sys
 
 from data.api.twitter.TwitterClient import TwitterClient
 from data.utils.parserUtil import PartiesTwitterParser
@@ -18,7 +20,7 @@ def fetch_timeline_tweets():
         twitterClient.setStartDate(str(startdate))
         twitterClient.setEndDate(str(nextdate))
         stdout.write("\nStart date: " + str(startdate) + " -> Next date: " + str(nextdate))
-        twitterClient.getTweetsAndSave()
+        twitterClient.getTweetsAndSave(proxy=True)
         startdate = nextdate
     print("Finished saving tweets from " + str(count) + " days")
 
@@ -28,19 +30,25 @@ def fetch_party_tweets():
         twitterClient.setUsername(party.pusername)
         twitterClient.setStartDate(str(date(2010,1,1)))
         twitterClient.setEndDate(str(date(2017,9,30)))
-        twitterClient.getTweetsAndSave()
+        twitterClient.getTweetsAndSave(proxy=True)
         for user in party.pusers:
             print("\nGetting tweets from User: " + user.name)
             twitterClient.setUsername(user.username)
             twitterClient.setStartDate(None)
-            twitterClient.getTweetsAndSave()
+            twitterClient.getTweetsAndSave(proxy=True)
 
 def fetch_tweets():
     #Get timeline tweets
     fetch_timeline_tweets()
-    time.sleep(10)
     #Get party tweets
     fetch_party_tweets()
 
-
-fetch_tweets()
+if sys.argv[0] == 'timeline':
+    print("[Fetching timeline tweets]")
+    fetch_timeline_tweets()
+elif sys.argv[0] == 'party':
+    print("[Fetching party tweets]")
+    fetch_party_tweets()
+else:
+    print("[Fetching all tweets]")
+    fetch_tweets()
