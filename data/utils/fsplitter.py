@@ -5,16 +5,6 @@ readsize = 1024
 bytes = 99000000
 chunksize = int(bytes)
 
-def zip_file(unzipped_filename, zipped_filename):
-    ZipFile(zipped_filename, 'w').write(unzipped_filename)
-
-def unzip_file(zipped_filename,unzip_directory):
-    with ZipFile(zipped_filename, "r") as z:
-        z.extractall(unzip_directory)
-
-
-
-
 def split(fromfile, todir, chunksize=chunksize, zip=False, remove_file=True):
     print("Splitting file: " + fromfile)
     if not os.path.exists(todir):  # caller handles errors
@@ -32,27 +22,17 @@ def split(fromfile, todir, chunksize=chunksize, zip=False, remove_file=True):
         fileobj = open(filename, 'wb')
         fileobj.write(chunk)
         fileobj.close()  # or simply open(  ).write(  )
-        if zip:
-            zip_file(filename, filename + '.zip')
-            os.remove(filename)
     input.close()
     assert partnum <= 9999  # join sort fails if 5 digits
     if remove_file:
         os.remove(fromfile)
     return partnum
 
-
-
 def join(fromdir, tofile, zip=False, remove_dir = True):
     print("Joining into file: " + tofile)
     output = open(tofile, 'wb')
     parts  = os.listdir(fromdir)
     parts.sort(  )
-    if zip:
-        for filename in parts:
-            filepath = os.path.join(fromdir, filename)
-            unzip_file(zipped_filename=filepath, unzip_directory='.')
-            os.remove(filepath)
     parts = os.listdir(fromdir)
     parts.sort()
     for filename in parts:

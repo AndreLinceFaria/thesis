@@ -1,4 +1,4 @@
-import data.utils.splitZipper as sz
+import data.utils.fsplitter as fs
 
 import os
 
@@ -12,6 +12,6 @@ print("Files Dir: " + str(files_dir))
 print("Filename: " + str(filename))
 
 if os.path.exists(files_dir):
-    sz.join(fromdir=files_dir, tofile=filename,zip = False)
+    fs.join(fromdir=files_dir, tofile=filename,zip = False)
 else:
-    sz.split(fromfile=filename, todir=files_dir, zip = False)
+    fs.split(fromfile=filename, todir=files_dir, zip = False)
