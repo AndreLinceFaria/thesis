@@ -40,6 +40,13 @@ class TweetParsed(Base):
     username = Column(String, ForeignKey('twitter_user.username'))
     text = Column(Text)
 
+'''
+class TweetPartyParsed(Base):
+    __tablename__ = 'tweet_party_parsed'
+    tweetId = Column(Integer, ForeignKey('tweet_party.tweetId'), primary_key=True)
+    username = Column(String, ForeignKey('twitter_user.username'))
+    text = Column(Text)
+'''
 #create engine
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///database.sqlite')

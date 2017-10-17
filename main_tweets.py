@@ -43,10 +43,11 @@ def fetch_tweets():
     #Get party tweets
     fetch_party_tweets()
 
-if sys.argv[0] == 'timeline':
+print(sys.argv[1])
+if sys.argv[1] == 'timeline':
     print("[Fetching timeline tweets]")
     fetch_timeline_tweets()
-elif sys.argv[0] == 'party':
+elif sys.argv[1] == 'party':
     print("[Fetching party tweets]")
     fetch_party_tweets()
 else:
