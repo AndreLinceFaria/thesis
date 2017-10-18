@@ -8,7 +8,7 @@ import re
 import operator
 
 debug = False
-test = True
+test = False
 
 
 def is_number(s):
@@ -118,9 +118,12 @@ def generate_candidate_keyword_scores(phrase_list, word_score):
         keyword_candidates[phrase] = candidate_score
     return keyword_candidates
 
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+stopwords = str(dir_path) + '\stopwords-pt.txt'
 
 class Rake(object):
-    def __init__(self, stop_words_path):
+    def __init__(self, stop_words_path=stopwords):
         self.stop_words_path = stop_words_path
         self.__stop_words_pattern = build_stop_word_regex(stop_words_path)
 
@@ -166,3 +169,9 @@ if test:
     rake = Rake("SmartStoplist.txt")
     keywords = rake.run(text)
     print keywords
+
+def get_top_scoring_candidates(keywords):
+    if len(keywords) >=9:
+        return keywords[0:len(keywords) / 2]
+    else:
+        return keywords[0:len(keywords)]
