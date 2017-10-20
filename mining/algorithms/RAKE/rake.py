@@ -171,7 +171,7 @@ if test:
     print keywords
 
 def get_top_scoring_candidates(keywords):
-    if len(keywords) >=9:
+    if len(keywords) >=20:
         return keywords[0:len(keywords) / 2]
     else:
         return keywords[0:len(keywords)]
