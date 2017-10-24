@@ -34,18 +34,6 @@ class TweetParty(Base):
     hashtags = Column(Text)
     geo = Column(String)
 
-class TweetParsed(Base):
-    __tablename__ = 'tweet_parsed'
-    tweetId = Column(Integer, ForeignKey('tweet.tweetId'), primary_key=True)
-    username = Column(String, ForeignKey('twitter_user.username'))
-    text = Column(Text)
-
-class TweetPartyParsed(Base):
-    __tablename__ = 'tweet_party_parsed'
-    tweetId = Column(Integer, ForeignKey('tweet.tweetId'), primary_key=True)
-    username = Column(String, ForeignKey('twitter_user.username'))
-    text = Column(Text)
-
 #create engine
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///database.sqlite')

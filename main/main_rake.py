@@ -7,6 +7,7 @@ import mining.algorithms.RAKE.rake_setup as rs
 session = getSession()
 rk = rake.Rake()
 
+'''
 def rakeTimelineTweets():
     tweets = session.query(Tweet).all()
     print("RAKE-ing timeline Tweets: " + str(len(tweets)))
@@ -58,7 +59,7 @@ else:
     print("[Fetching all tweets]")
     rakeTimelineTweets()
     rakePartyTweets()
-
+'''
 
 '''
 read list string representation
