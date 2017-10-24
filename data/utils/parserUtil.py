@@ -102,6 +102,22 @@ class PartiesTwitterParser():
                 pobj.pusers.append(PartyUser(user['name'].encode('utf-8'),user['username'].encode('utf-8')))
             self.parties.append(pobj)
 
+    def getLabelFromUsername(self,username):
+        for party in self.parties:
+            if party.pusername == username:
+                return party.pname
+            else:
+                for user in party.pusers:
+                    if user.username == username:
+                        return party.pname
+
+    def get_labels(self):
+        lst = []
+        for party in self.parties:
+            lst.append(party.pname)
+        return lst
+
+
 class Party():
     def __init__(self, pname, pusername):
         self.pname = pname

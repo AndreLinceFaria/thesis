@@ -34,15 +34,14 @@ class TweetParty(Base):
     hashtags = Column(Text)
     geo = Column(String)
 
-#create engine
-from sqlalchemy import create_engine
-engine = create_engine('sqlite:///database.sqlite')
-Base.metadata.create_all(engine)
-
 # create session
 from sqlalchemy.orm import sessionmaker
 
-def getSession():
+def getSession(path='database.sqlite'):
+    # create engine
+    from sqlalchemy import create_engine
+    engine = create_engine('sqlite:///' + path)
+    Base.metadata.create_all(engine)
     DBSession = sessionmaker()
     DBSession.configure(bind=engine)
     session = DBSession()

@@ -103,3 +103,7 @@ ENV/
 .idea
 .idea/
 .idea/*
+/database.sqlite
+database.sqlite
+mining/algorithms/features/database.sqlite
+!/database.sqlite
