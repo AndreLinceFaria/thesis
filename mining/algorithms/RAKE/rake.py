@@ -60,6 +60,7 @@ def split_sentences(text):
 
 
 def build_stop_word_regex(stop_word_file_path):
+    print(stop_word_file_path)
     stop_word_list = load_stop_words(stop_word_file_path)
     stop_word_regex_list = []
     for word in stop_word_list:
