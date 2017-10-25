@@ -60,8 +60,13 @@ def split_sentences(text):
 
 
 def build_stop_word_regex(stop_word_file_path):
-    print(stop_word_file_path)
-    stop_word_list = load_stop_words(stop_word_file_path)
+    #print(stop_word_file_path)
+    stop_word_list = []
+    if isinstance(stop_word_file_path, list):
+        for file_path in stop_word_file_path:
+            stop_word_list.extend(load_stop_words(file_path))
+    else:
+        stop_word_list = load_stop_words(stop_word_file_path)
     stop_word_regex_list = []
     for word in stop_word_list:
         word_regex = r'\b' + word + r'(?![\w-])'  # added look ahead for hyphen
