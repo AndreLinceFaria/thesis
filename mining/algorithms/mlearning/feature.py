@@ -4,14 +4,17 @@ from data.utils.parserUtil import PartiesTwitterParser
 import mining.algorithms.RAKE.rake as rake
 import mining.algorithms.RAKE.rake_setup as rs
 import unidecode as ud
-import math
 import numpy as np
 from collections import Counter
 from copy import deepcopy
 from sklearn.model_selection import train_test_split
 
 rk = rake.Rake()
-session = getSession(path=os.path.abspath('../../../../database.sqlite'))
+
+print("Parties Config: " + str(os.path.join(os.path.dirname(__file__),r'..\..\..\files\parties-config','parties-twitter.json')))
+print("Database: " + str(os.path.join(os.path.dirname(__file__),'..\..\..\database.sqlite')))
+
+session = getSession(path=os.path.join(os.path.dirname(__file__),'..\..\..\database.sqlite'))
 
 def get_tweets(count):
     if not count or count==None:
@@ -22,7 +25,7 @@ def get_tweets(count):
 def get_ptParser(filename = None):
     if filename == None:
         filename = 'parties-twitter.json'
-    fname = os.path.abspath('../../../../files/parties-config/' + str(filename))
+    fname = os.path.join(os.path.dirname(__file__),r'..\..\..\files\parties-config',str(filename))
     return PartiesTwitterParser(fname)
 
 def rakec(content):
@@ -126,20 +129,4 @@ class DatasetManager():
     def get_ds_train_test(self, X, Y, test_size=0.25):
         X_Train, X_Test, Y_Train, Y_Test = train_test_split(X, Y, test_size=test_size, random_state=42)
         return X_Train, X_Test, Y_Train, Y_Test
-
-
-if __name__ == '__main__':
-    fm = FeatureManager()
-    features = fm.get_features_most_common(tweets=get_tweets(100),nr_features=30)
-    labels = get_ptParser().get_labels()
-    print(features)
-    print(labels)
-    dm = DatasetManager()
-    X, Y = dm.get_ds_XY(tweets=get_tweets(200), features=features, labels_list=labels)
-    print(X)
-    print(Y)
-    X = dm.get_ds_X("O jose silva pede saude", features)
-    print (X)
-    X = dm.get_ds_X(tweets=get_tweets(1), features=features)
-    print (X)
 

@@ -1,8 +1,9 @@
 import pickle
 
 def load_model(filename):
-    print("Loading model from: " + filename + ".pk")
-    with open(filename + ".pk", 'rb') as f:
+    fname = filename + ".pk"
+    print("Loading model from: " + fname)
+    with open(fname, 'rb') as f:
         model = pickle.load(f)
     return model
 
