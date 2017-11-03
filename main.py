@@ -3,10 +3,9 @@ from mining.algorithms.mlearning.classifiers.NBayes import NBayes
 from mining.algorithms.mlearning.classifiers.NNet import NNet
 from mining.algorithms.mlearning.classifiers.KNN import KNN
 from mining.algorithms.mlearning.classifiers.SVM import SVM
-from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 import mining.algorithms.mlearning.feature as f
 import logging as log
-
 log.basicConfig(filename='logs/main.log',level=log.DEBUG)
 
 features_number_tweets = 1000
@@ -60,12 +59,21 @@ for train_indices, test_indices in kf.split(X,Y):
 text = "Antonio costa, um bom partido para os adultos"
 x_custom = dm.get_ds_X(text, features)
 
+tweets = f.get_user_tweets(10)
+
+for tweet in tweets:
+    print(str(tweet.text.encode('utf-8')))
+    x = dm.get_ds_X(tweet.text,features)
+    label = nnet.predict_with_label(x,labels)
+    print(str(tweet.username.encode('utf-8')) + " orientation: " + str(label))
+
+'''
 for alg in lst:
     label = alg.predict_with_label(x_custom, labels)
     log.debug(alg.name)
     log.debug("Text: " + text + "\nLabel: " + str(label))
     alg.save(fname=alg.name + "[" + strftime("%b_%d_%Y") +"]")
-
+'''
 
 
 

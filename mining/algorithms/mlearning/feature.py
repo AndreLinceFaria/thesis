@@ -16,11 +16,14 @@ print("Database: " + str(os.path.join(os.path.dirname(__file__),'..\..\..\databa
 
 session = getSession(path=os.path.join(os.path.dirname(__file__),'..\..\..\database.sqlite'))
 
-def get_tweets(count):
+def get_tweets(count,table=TweetParty):
     if not count or count==None:
-        return session.query(TweetParty).all()
-    return session.query(TweetParty).filter().limit(count).all()
+        return session.query(table).all()
+    return session.query(table).filter().limit(count).all()
 
+def get_user_tweets(count=10):
+    result = session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username LIMIT :count',{'count':count})
+    return result
 
 def get_ptParser(filename = None):
     if filename == None:
@@ -113,9 +116,10 @@ class DatasetManager():
                         f = features.index(word)
                         X[n][f] += 1
             return X
-        elif isinstance(tweets, str):
+        elif isinstance(tweets_formated, str) or isinstance(tweets_formated, unicode):
+            raked_tweets = rakec(tweets_formated)
             X = np.zeros(F)
-            words_in_text = tweets.split()
+            words_in_text = raked_tweets.split()
             for word in words_in_text:
                 if word in features:
                     f = features.index(word)
@@ -129,4 +133,3 @@ class DatasetManager():
     def get_ds_train_test(self, X, Y, test_size=0.25):
         X_Train, X_Test, Y_Train, Y_Test = train_test_split(X, Y, test_size=test_size, random_state=42)
         return X_Train, X_Test, Y_Train, Y_Test
-
