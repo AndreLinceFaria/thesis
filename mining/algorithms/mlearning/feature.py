@@ -21,9 +21,10 @@ def get_tweets(count,table=TweetParty):
         return session.query(table).all()
     return session.query(table).filter().limit(count).all()
 
-def get_user_tweets(count=10):
-    result = session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username LIMIT :count',{'count':count})
-    return result
+def get_user_tweets(count):
+    if not count or count==None:
+        return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username')
+    return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username LIMIT :count',{'count':count})
 
 def get_ptParser(filename = None):
     if filename == None:
