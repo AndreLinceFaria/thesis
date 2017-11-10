@@ -16,10 +16,21 @@ print("Database: " + str(os.path.join(os.path.dirname(__file__),'..\..\..\databa
 
 session = getSession(path=os.path.join(os.path.dirname(__file__),'..\..\..\database.sqlite'))
 
-def get_tweets(count,table=TweetParty):
+def get_tweets(count,table=TweetParty, cbu = False):
     if not count or count==None:
         return session.query(table).all()
-    return session.query(table).filter().limit(count).all()
+    elif cbu: #if count by user (Around 40 distinct users. nr of tweets fetch should be 40 * count.
+        users = session.execute("SELECT DISTINCT(username) FROM tweet_party")
+        tweets = []
+        for user in users:
+            [tweets.append(t) for t in session.execute("SELECT tp.* FROM tweet_party tp WHERE tp.username = \"" + ud._unidecode(user.username) + "\" ORDER BY RANDOM() LIMIT " + str(count))]
+        print("Fetched " + str(count) + " Random tweets per party which resulted in " + str(len(tweets)) + " tweets in Total")
+        return tweets
+    else:
+        return session.query(table).filter().limit(count).all()
+
+if __name__ == "__main__":
+    get_tweets(count=400,cbu=True)
 
 def get_user_tweets(count):
     if not count or count==None:
@@ -33,28 +44,33 @@ def get_ptParser(filename = None):
     return PartiesTwitterParser(fname)
 
 def rakec(content):
+    print("Raking; " + content.encode('utf-8'))
     tkw = rake.get_top_scoring_candidates(
         rk.run(
             rs.remove_regex(ud._unidecode(content))))
     raked_text = ""
     for tstr in [x[0] for x in tkw]:
         raked_text += tstr + " "
+    print("Raking Finished.")
     return raked_text
 
-def format_tweets(tweets, pfname = None):
+def format_tweets(tweets, pfname = None, timeout_seconds = 10):
+    print("Formatting " + str(len(tweets)) + " tweets...")
     tlist = []
     for tweet in tweets:
         label = get_ptParser(pfname).getLabelFromUsername(str(tweet.username))
         raked_text = rakec(tweet.text)
-        tup = (raked_text, label)
-        tlist.append(
-            tup
-        )
+        if raked_text != None:
+            tup = (raked_text, label)
+            tlist.append(
+                tup
+            )
     return tlist
 
 class FeatureManager():
 
     def get_features_most_common(self, tweets, nr_features, pfname=None):
+        print("Generating features...")
         tweets = format_tweets(tweets=tweets, pfname=pfname)
         words = []
         for t in tweets:

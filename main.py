@@ -4,7 +4,7 @@ train = False
 
 if __name__ == "__main__":
     alg = MasterAlgorithm()
-    alg.setup(fnt=10000, fnf=50)
+    alg.setup(fntg=10000, fnf=50)
     if train:
         alg.train(tweets_train=10000,save=True)
     else:

@@ -20,8 +20,8 @@ class MasterAlgorithm:
         self.algorithms = None
         self.cv = None
 
-    def setup(self, fnt=None, fnf=50, algs = None):
-        self.features = fm.get_features_most_common(tweets=f.get_tweets(count=fnt), nr_features=fnf)
+    def setup(self, fntg=500, fnf=50, algs = None):
+        self.features = fm.get_features_most_common(tweets=f.get_tweets(count=fntg,cbu=True), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
         if algs==None or not isinstance(algs, list):
             self.algorithms = [NNet(), NBayes(), KNN(), SVM()]
@@ -118,6 +118,6 @@ class MasterAlgorithm:
 
 if __name__ == "__main__":
     alg = MasterAlgorithm()
-    alg.setup(fnt=10000, fnf=50)
+    alg.setup(fntg=500, fnf=50)
     #alg.train(tweets_train=10000,save=True)
     alg.predict(tweets_predict=30,load=True)
