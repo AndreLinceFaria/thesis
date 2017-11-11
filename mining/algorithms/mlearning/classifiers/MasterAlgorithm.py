@@ -119,7 +119,7 @@ class MasterAlgorithm:
 
 if __name__ == "__main__":
     alg = MasterAlgorithm()
-    alg.setup(fntg=500, fnf=50)
+    alg.setup(fntg=100, fnf=50)
     #alg.train(tweets_train=10000,save=True)
     #alg.predict(tweets_predict=30,load=True)
     print("END")
