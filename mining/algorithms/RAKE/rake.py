@@ -7,6 +7,8 @@
 import re
 import operator
 
+from utils.timeouts import exit_after
+
 debug = False
 test = False
 
@@ -133,6 +135,7 @@ class Rake(object):
         self.stop_words_path = stop_words_path
         self.__stop_words_pattern = build_stop_word_regex(stop_words_path)
 
+    @exit_after(10)
     def run(self, text):
         sentence_list = split_sentences(text)
 

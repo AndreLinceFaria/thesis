@@ -8,6 +8,7 @@ import numpy as np
 from collections import Counter
 from copy import deepcopy
 from sklearn.model_selection import train_test_split
+from utils.timeouts import exit_after
 
 rk = rake.Rake()
 
@@ -43,6 +44,7 @@ def get_ptParser(filename = None):
     fname = os.path.join(os.path.dirname(__file__),r'..\..\..\files\parties-config',str(filename))
     return PartiesTwitterParser(fname)
 
+@exit_after(10)
 def rakec(content):
     print("Raking; " + content.encode('utf-8'))
     tkw = rake.get_top_scoring_candidates(
@@ -51,7 +53,6 @@ def rakec(content):
     raked_text = ""
     for tstr in [x[0] for x in tkw]:
         raked_text += tstr + " "
-    print("Raking Finished.")
     return raked_text
 
 def format_tweets(tweets, pfname = None, timeout_seconds = 10):
@@ -59,7 +60,11 @@ def format_tweets(tweets, pfname = None, timeout_seconds = 10):
     tlist = []
     for tweet in tweets:
         label = get_ptParser(pfname).getLabelFromUsername(str(tweet.username))
-        raked_text = rakec(tweet.text)
+        try:
+            raked_text = rakec(tweet.text)
+        except KeyboardInterrupt:
+            print("timed out.")
+            raked_text = None
         if raked_text != None:
             tup = (raked_text, label)
             tlist.append(
@@ -72,6 +77,7 @@ class FeatureManager():
     def get_features_most_common(self, tweets, nr_features, pfname=None):
         print("Generating features...")
         tweets = format_tweets(tweets=tweets, pfname=pfname)
+        print("TWEETS FORMATED")
         words = []
         for t in tweets:
             words += t[0].split()
