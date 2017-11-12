@@ -3,12 +3,14 @@ import re
 import unidecode as ud
 
 
-tweets = get_tweets(count=100,cbu=True)
+tweets = get_tweets(count=10,cbu=True)
 
 i = 0
 for tweet in tweets:
-    cleanString = re.sub(r"^\\s+[A-Za-z,;'\"\\s]+[.?!]$",' ',str(ud._unidecode(tweet.text)))
-    cleanString = re.sub(r"http \S+|https \S+|http\S+", "", cleanString)
-    cleanString = re.sub(r"pic.twitter\S+|youtube.com\S+|twitter.com\S+|bit.ly\S+|goo.gl\S+|youtu.be\S+", "", cleanString)
-
-
+    #pattern = re.compile("/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/")
+    pattern = re.compile("https?://.*?\\s+")
+    text = ud._unidecode(tweet.text)
+    cleanString = re.sub(pattern, '', text)
+    print("Original: " + text)
+    print("Regex: " + cleanString)
+    print("")

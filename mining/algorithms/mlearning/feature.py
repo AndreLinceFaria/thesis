@@ -44,21 +44,22 @@ def get_ptParser(filename = None):
     fname = os.path.join(os.path.dirname(__file__),r'..\..\..\files\parties-config',str(filename))
     return PartiesTwitterParser(fname)
 
-@exit_after(10)
 def rakec(content):
-    print("Raking: " + content.encode('utf-8'))
+    #print("Raking: " + content.encode('utf-8'))
     tkw = rake.get_top_scoring_candidates(
         rk.run(
-            rs.remove_regex(ud._unidecode(content))))
+            ud._unidecode(content)))
     raked_text = ""
     for tstr in [x[0] for x in tkw]:
         raked_text += tstr + " "
-    print("Raked text: " + raked_text)
+    raked_text = rs.remove_regex(raked_text)
+    #print("Raked text: " + raked_text)
     return raked_text
 
 def format_tweets(tweets, pfname = None, timeout_seconds = 10):
     print("Formatting " + str(len(tweets)) + " tweets...")
     tlist = []
+    i = 0
     for tweet in tweets:
         label = get_ptParser(pfname).getLabelFromUsername(str(tweet.username))
         try:
@@ -68,9 +69,13 @@ def format_tweets(tweets, pfname = None, timeout_seconds = 10):
             raked_text = None
         if raked_text != None:
             tup = (raked_text, label)
+            print("idx: " + str(i) + " tid: " + str(tweet.tweetId))
+            print("original: " + str(ud._unidecode(tweet.text)))
+            print("result: " + str(raked_text))
             tlist.append(
                 tup
             )
+        i+=1
     return tlist
 
 class FeatureManager():

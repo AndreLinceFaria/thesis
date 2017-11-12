@@ -20,9 +20,12 @@ def custom_regex(filename=regexFile):
     return regext
 
 @exit_after(10)
-def remove_regex(textl):
-    print("Text: " + text)
-    tmp = text
-    for regex in custom_regex():
-        tmp = re.sub(str(regex), '', tmp)
+def remove_regex(text):
+    try:
+        tmp = text
+        for regex in custom_regex():
+            tmp = re.sub(re.compile(regex), '', tmp)
+    except Exception as e:
+        print("Exception in remove_regex: " + str(e))
+        tmp = None
     return tmp
