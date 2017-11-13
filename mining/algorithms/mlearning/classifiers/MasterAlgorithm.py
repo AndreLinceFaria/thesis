@@ -19,14 +19,17 @@ class MasterAlgorithm:
         self.labels = None
         self.algorithms = None
         self.cv = None
+        self.latest_scores = None
 
     def setup(self, fntg=500, fnf=50, algs = None):
         self.features = fm.get_features_most_common(tweets=f.get_tweets(count=fntg,cbu=True), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
-        #print("AFTER FEATURES AND LABELS")
+        print("Features: " + str(self.features))
+        print("Labels: " + str(self.labels))
         if algs==None or not isinstance(algs, list):
             self.algorithms = [NNet(), NBayes(), KNN(), SVM()]
         else:
+            print("MA-setup: Training " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs
 
     def train(self, tweets_train=None, save = False):
@@ -63,15 +66,16 @@ class MasterAlgorithm:
             table.append_row([str(i)] + scores)
             i+=1
 
-        log.debug(str(table))
+        self.latest_scores = scores
 
+        log.debug(str(table))
         log.debug("Training time: " + str(round(time()-dt, 2)) + " seconds.")
 
         if save:
             for alg in self.algorithms:
                 p.save_model(alg.clf,'models/' + alg.name)
 
-    def predict(self,tweets_predict=None, load=False):
+    def predict(self,tweets_predict=None, load=False, write_to_file=False):
         dt = time()
         if self.labels == None or self.features == None:
             self.setup()
@@ -85,7 +89,9 @@ class MasterAlgorithm:
 
         if load:
             for alg in self.algorithms:
-                alg.clf = p.load_model('models/' + alg.name)
+                model = p.load_model('models/' + alg.name)
+                if model != None:
+                    alg.clf = model
 
         tweets = f.get_user_tweets(tweets_predict)
         table = BeautifulTable()
@@ -119,7 +125,7 @@ class MasterAlgorithm:
 
 if __name__ == "__main__":
     alg = MasterAlgorithm()
-    alg.setup(fntg=500, fnf=50)
-    #alg.train(tweets_train=10000,save=True)
-    #alg.predict(tweets_predict=30,load=True)
+    alg.setup(fntg=500, fnf=150)
+    alg.train(tweets_train=500,save=True)
+    alg.predict(tweets_predict=None,load=True)
     print("END")

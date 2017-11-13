@@ -17,7 +17,7 @@ print("Database: " + str(os.path.join(os.path.dirname(__file__),'..\..\..\databa
 
 session = getSession(path=os.path.join(os.path.dirname(__file__),'..\..\..\database.sqlite'))
 
-def get_tweets(count,table=TweetParty, cbu = False):
+def get_tweets(count,table=TweetParty, cbu = True):
     if not count or count==None:
         return session.query(table).all()
     elif cbu: #if count by user (Around 40 distinct users. nr of tweets fetch should be 40 * count.
@@ -60,22 +60,29 @@ def format_tweets(tweets, pfname = None, timeout_seconds = 10):
     print("Formatting " + str(len(tweets)) + " tweets...")
     tlist = []
     i = 0
+    missed_tweets = 0
     for tweet in tweets:
         label = get_ptParser(pfname).getLabelFromUsername(str(tweet.username))
-        try:
-            raked_text = rakec(tweet.text)
-        except KeyboardInterrupt:
-            print("timed out.")
-            raked_text = None
-        if raked_text != None:
-            tup = (raked_text, label)
-            print("idx: " + str(i) + " tid: " + str(tweet.tweetId))
-            print("original: " + str(ud._unidecode(tweet.text)))
-            print("result: " + str(raked_text))
-            tlist.append(
-                tup
-            )
-        i+=1
+        if label != None:
+            try:
+                raked_text = rakec(tweet.text)
+            except KeyboardInterrupt:
+                print("timed out.")
+                raked_text = None
+            if raked_text != None:
+                tup = (raked_text, label)
+                print("idx: " + str(i) + " tid: " + str(tweet.tweetId))
+                print("original: " + str(ud._unidecode(tweet.text)))
+                print("result: " + str(raked_text))
+                tlist.append(
+                    tup
+                )
+            i+=1
+        else:
+            missed_tweets +=1
+
+    print("formated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.")
+
     return tlist
 
 class FeatureManager():

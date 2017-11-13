@@ -1,5 +1,5 @@
 from mining.algorithms.mlearning.classifiers.Classifier import Classifier
-from sklearn.naive_bayes import MultinomialNB, GaussianNB
+from sklearn.naive_bayes import MultinomialNB
 
 class NBayes(Classifier):
     def __init__(self, fname=None):
@@ -10,4 +10,4 @@ class NBayes(Classifier):
             self.create()
 
     def create(self):
-        self.clf = GaussianNB()
+        self.clf = MultinomialNB()
