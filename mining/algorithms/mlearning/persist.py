@@ -20,7 +20,7 @@ def save_model(model, filename, save_literal=False):
 
 def get_files_from_dir(filename):
         path, file = os.path.split(filename)
-        match = "\S*(" + file + "-)(\d+)(.pk)"
+        match = "\S*(" + file + "-)(\d+)(.pk|.xlsx)"
         pt = re.compile(match)
         files = [f for f in os.listdir(path) if re.match(pt, f)]
         files.sort()
