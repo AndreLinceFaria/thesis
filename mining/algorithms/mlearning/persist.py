@@ -2,10 +2,10 @@ import pickle
 import os, re
 
 def load_model(filename, load_literal=False):
-    files,path = get_files_from_dir(filename)
-    if len(files) > 0:
-        fname = os.path.join(path, files[len(files)-1])
-        print("Loading model from: " + files[len(files)-1])
+    files = get_files_from_dir(filename)
+    if len(files[0]) > 0:
+        fname = os.path.join(files[1], files[0][len(files)-1])
+        print("Loading model from: " + files[0][len(files[0])-1])
         with open(fname, 'rb') as f:
             model = pickle.load(f)
         return model
@@ -13,7 +13,7 @@ def load_model(filename, load_literal=False):
 
 def save_model(model, filename, save_literal=False):
     files = get_files_from_dir(filename)
-    fname = filename + "-" + str(len(files)) + ".pk"
+    fname = filename + "-" + str(len(files[0])) + ".pk"
     print("Saving model to: " + fname)
     with open(fname, 'wb') as f:
         pickle.dump(model, f)

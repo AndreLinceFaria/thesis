@@ -10,6 +10,7 @@ import mining.algorithms.mlearning.persist as p
 import logging
 from beautifultable import BeautifulTable
 import utils.plots as plots
+import utils.list_utils as lu
 
 fm = f.FeatureManager()
 dm = f.DatasetManager()
@@ -65,9 +66,9 @@ class MasterAlgorithm:
                 alg.train(X_train, Y_train)
                 score = alg.test(X_test, Y_test)
 
-                scores[self.algorithms.index(alg)] = str(score)
+                scores[self.algorithms.index(alg)] = score
 
-            table.append_row([str(i)] + scores)
+            table.append_row([str(i)] + [str(score) for score in scores])
             i+=1
 
         self.latest_scores = scores
@@ -135,14 +136,16 @@ class MasterAlgorithm:
         log.debug("Predict time: " + str(round(time() - dt, 2)) + " seconds.")
 
         plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
-        plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
+        #plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
 
     def __decideClass(self,data,decision='average'):
         if decision == 'average':
             return max(set(data), key=data.count)
         elif decision =='weighted' and self.latest_scores!=None:
             # ADD WEIGHTED LOGIC
-            self.__decideClass(data)
+            res = lu.accumulate(zip(data,self.latest_scores))
+            mx = lu.get_max(res)
+            return mx[0]
         else:
             self.__decideClass(data)
 
