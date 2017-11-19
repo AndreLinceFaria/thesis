@@ -63,6 +63,7 @@ def format_tweets(tweets, pfname = None, timeout_seconds = 10):
     missed_tweets = 0
     for tweet in tweets:
         label = get_ptParser(pfname).getLabelFromUsername(str(tweet.username))
+        print("Username: " + str(tweet.username) + " Label: " + str(label))
         if label != None:
             try:
                 raked_text = rakec(tweet.text)

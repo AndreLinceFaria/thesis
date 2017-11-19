@@ -1,4 +1,5 @@
-from parsers import ParserCSV, ParserJSON
+
+from data.utils.parsers import ParserCSV, ParserJSON
 
 results = '././files/autarquicas17-resultados.csv'
 config = '././files/parties-config/parties-config-1.json'
@@ -104,7 +105,7 @@ class PartiesTwitterParser():
 
     def getLabelFromUsername(self,username):
         for party in self.parties:
-            if party.pusername == username:
+            if str(party.pusername) == username:
                 return party.pname
             else:
                 for user in party.pusers:
@@ -120,12 +121,12 @@ class PartiesTwitterParser():
 
 class Party():
     def __init__(self, pname, pusername):
-        self.pname = pname
-        self.pusername = pusername
+        self.pname = pname.decode('utf-8')
+        self.pusername = pusername.decode('utf-8')
         self.pusers = []
 
 
 class PartyUser:
     def __init__(self, name, username):
-        self.name = name
-        self.username = username
+        self.name = name.decode('utf-8')
+        self.username = username.decode('utf-8')

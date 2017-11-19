@@ -9,6 +9,7 @@ import mining.algorithms.mlearning.feature as f
 import mining.algorithms.mlearning.persist as p
 import logging
 from beautifultable import BeautifulTable
+import utils.plots as plots
 
 fm = f.FeatureManager()
 dm = f.DatasetManager()
@@ -46,6 +47,9 @@ class MasterAlgorithm:
         self.cv = StratifiedKFold(n_splits=len(self.labels), shuffle=True)
         X, Y = dm.get_ds_XY(tweets=f.get_tweets(tweets_train), features=self.features, labels_list=self.labels)
 
+        # Uncoment to generate chart
+        plots.plot_learning_curve(estimator=self.algorithms,title=None,X=X,y=Y,cv=self.cv,n_jobs=1,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
+
         table = BeautifulTable()
         table.column_headers = ["Iteration"] + [alg.name for alg in self.algorithms]
 
@@ -70,12 +74,16 @@ class MasterAlgorithm:
 
         log.debug(str(table))
         log.debug("Training time: " + str(round(time()-dt, 2)) + " seconds.")
+        
 
         if save:
             for alg in self.algorithms:
                 p.save_model(alg.clf,'models/' + alg.name)
 
-    def predict(self,tweets_predict=None, load=False, write_to_file=False):
+        return scores
+
+
+    def predict(self,tweets_predict=None, load=False):
         dt = time()
         if self.labels == None or self.features == None:
             self.setup()
@@ -97,6 +105,8 @@ class MasterAlgorithm:
         table = BeautifulTable()
         table.column_headers = ["Index","Username"] + [alg.name for alg in self.algorithms] + ["Final (Average)"]
 
+        final_results = []
+        final_results.append(["",""] + [alg.name for alg in self.algorithms])
         i = 0
         for tweet in tweets:
             tmp_list = [''] * len(self.algorithms)
@@ -105,7 +115,9 @@ class MasterAlgorithm:
                 x = dm.get_ds_X(tweet.text, self.features)
                 pred, label = alg.predict_with_label(x, self.labels)
                 tmp_list[idx] = label
-            table.append_row([i,tweet.username] + tmp_list + [max(set(tmp_list), key=tmp_list.count)])
+
+            table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(tmp_list,decision='weighted')])
+            final_results.append([i,tweet.username] + tmp_list)
             i+=1
         log.debug(table)
 
@@ -114,7 +126,7 @@ class MasterAlgorithm:
             results_final[int(self.labels.index(party))] += 1
 
         table_final = BeautifulTable()
-        table_final.column_headers = self.labels
+        table_final.column_headers = [str(lab.decode('utf-8')) for lab in self.labels]
         table_final.append_row(results_final)
 
         log.debug("\n [Prediction Count] \n")
@@ -122,10 +134,22 @@ class MasterAlgorithm:
         log.debug(table_final)
         log.debug("Predict time: " + str(round(time() - dt, 2)) + " seconds.")
 
+        plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
+        plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
+
+    def __decideClass(self,data,decision='average'):
+        if decision == 'average':
+            return max(set(data), key=data.count)
+        elif decision =='weighted' and self.latest_scores!=None:
+            # ADD WEIGHTED LOGIC
+            self.__decideClass(data)
+        else:
+            self.__decideClass(data)
+
 
 if __name__ == "__main__":
     alg = MasterAlgorithm()
-    alg.setup(fntg=500, fnf=150)
-    alg.train(tweets_train=500,save=True)
-    alg.predict(tweets_predict=None,load=True)
+    alg.setup(fntg=50, fnf=50)
+    scores = alg.train(tweets_train=100,save=True)
+    alg.predict(tweets_predict=10,load=True)
     print("END")
