@@ -107,5 +107,5 @@ ENV/
 database.sqlite
 mining/algorithms/features/database.sqlite
 !/database.sqlite
-/mining/algorithms/mlearning/classifiers/logs/
-/files/figures/
+/mining/algorithms/mlearning/classifiers/logs/*
+/files/figures/*

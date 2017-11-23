@@ -45,8 +45,6 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
         plt.legend(loc="best")
     path = os.path.join(os.path.dirname(__file__), r'..\files\figures', "Learning curve" + save_as)
     plt.savefig(path)
-    return plt
-
 
 def plot_predictions_per_label(data, labels,save_as):
     algs = data.pop(0)[2:]

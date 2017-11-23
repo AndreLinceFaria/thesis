@@ -136,7 +136,7 @@ class MasterAlgorithm:
         log.debug("Predict time: " + str(round(time() - dt, 2)) + " seconds.")
 
         plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
-        #plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
+        plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
 
     def __decideClass(self,data,decision='average'):
         if decision == 'average':
