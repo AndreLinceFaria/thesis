@@ -4,10 +4,12 @@ from sys import stdout,argv
 import sys
 
 from data.api.twitter.TwitterClient import TwitterClient
+from data.api.twitter.TweepyClient import TweepyClient
 from data.utils.parserUtil import PartiesTwitterParser
 
 twitterClient = TwitterClient()
 partiesTP = PartiesTwitterParser(filename='files/parties-config/parties-twitter.json')
+tweepyClient = TweepyClient()
 
 def fetch_timeline_tweets():
     startdate = date(2017, 8, 28)
@@ -36,6 +38,14 @@ def fetch_party_tweets():
             twitterClient.setUsername(user.username)
             twitterClient.setStartDate(None)
             twitterClient.getTweetsAndSave(proxy=True)
+
+def save_tweepy_for_users():
+    user_names = tweepyClient.get_user_names()
+    #missing: save usernames to database
+
+def get_user_tweets_and_save():
+    # missing: save all user tweets to database
+    pass
 
 def fetch_tweets():
     #Get timeline tweets

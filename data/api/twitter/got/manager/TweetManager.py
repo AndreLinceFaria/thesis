@@ -124,8 +124,7 @@ class TweetManager:
                 url = "https://twitter.com/i/search/timeline?q=%s&src=typd&max_position=%s"
 
 
-        import socket
-        import socks  #pip install pysocks
+        import socket, socks #pip install pysocks
         if proxy:
             #print("############\n Using TOR proxy \n###########")
             # Configuration
@@ -154,11 +153,6 @@ class TweetManager:
             ('Referer', url),
             ('Connection', "keep-alive")
         ]
-        '''
-        if proxy:
-            opener = urllib2.build_opener(urllib2.ProxyHandler({'http': proxy, 'https': proxy}), urllib2.HTTPCookieProcessor(cookieJar))
-        else:
-            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookieJar))'''
 
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookieJar))
         opener.addheaders = headers
@@ -167,7 +161,7 @@ class TweetManager:
             response = opener.open(url)
             jsonResponse = response.read()
         except:
-            raise ValueError("\nTwitter weird response. Try to see on browser: https://twitter.com/search?q=%s&src=typd" % urllib.quote(urlGetData))
+            raise ValueError("\nTwitter weird response. Try to see on proxy: https://twitter.com/search?q=%s&src=typd" % urllib.quote(urlGetData))
 
         dataJson = json.loads(jsonResponse)
 

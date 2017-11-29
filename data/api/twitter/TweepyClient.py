@@ -33,11 +33,26 @@ class TweepyClient():
         self.auth.set_access_token(access_token,access_token_secret)
         self.api = tweepy.API(self.auth)
 
-
+    def get_user_names(self): #remove duplicates list(set(t))
+        user_ids = []
+        for dist in self.locations:
+            print("District: " + dist['Name'])
+            i=0
+            while True:
+                try:
+                    users = self.api.search_users(q="geocode:"+dist['lat']+","+dist['lon']+","+dist['radius']+"km AND lang:pt", page=i)
+                except Exception:
+                    print("Exception caught.")
+                    break
+                if not len(users)>0:
+                    break
+                for user in users:
+                    user_ids.append(user.screen_name)
+                i+=1
+        total_users = list(set(user_ids))
+        print("Total users: " + str(len(total_users)))
+        return total_users
 
 if __name__ == "__main__":
     client = TweepyClient()
-    users = client.api.search_users(q="geocode:39.673370,-8.283691,306km AND lang:pt", page=2)
-    print(len(users))
-    for user in users:
-        print(user.id)
+    client.get_user_names()
