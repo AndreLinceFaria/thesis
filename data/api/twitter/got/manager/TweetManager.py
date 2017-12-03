@@ -18,6 +18,7 @@ class TweetManager:
 
     @staticmethod
     def getTweets(tweetCriteria, receiveBuffer=None, bufferLength=100, proxy=None):
+
         count = 0
         refreshCursor = ''
         results = []
@@ -126,10 +127,14 @@ class TweetManager:
 
         import socket, socks #pip install pysocks
         if proxy:
-            #print("############\n Using TOR proxy \n###########")
+            print("############\n Using TOR proxy \n###########")
             # Configuration
             SOCKS5_PROXY_HOST = '127.0.0.1'
             SOCKS5_PROXY_PORT = 9150
+
+            print("==================================\n"
+                  "=> Using TOR on "+SOCKS5_PROXY_HOST+":"+str(SOCKS5_PROXY_PORT)+"...\n"
+                  "==================================\n ")
 
             # Remove this if you don't plan to "deactivate" the proxy later
             default_socket = socket.socket

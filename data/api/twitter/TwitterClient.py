@@ -11,7 +11,12 @@ session = database.getSession()
 
 class TwitterClient():
 
-    def __init__(self, startDate = '2017-08-20', endDate = '2017-09-30', country = 'portugal', tweetCount = 0, query='geocode:39.673370,-8.283691,306km AND lang:pt', username=None):
+    def __init__(self, startDate = '2017-08-20',
+                 endDate = '2017-09-30',
+                 country = 'portugal',
+                 tweetCount = 0,
+                 query='geocode:39.673370,-8.283691,306km AND lang:pt',
+                 username=None):
         self.startDate = startDate
         self.endDate = endDate
         self.country = country
@@ -19,7 +24,7 @@ class TwitterClient():
         self.query = query
         self.username = username
 
-    def getTweetsAndSave(self, proxy=None):
+    def getTweetsAndSave(self, table, proxy=None):
         if self.startDate != None:
             print("\nGetting tweets since " + str(self.startDate) + " until " + str(self.endDate) + "...")
         logger.debug("TwitterClient is running...")
@@ -32,18 +37,15 @@ class TwitterClient():
                 logger.debug("Tweet: " + t.id)
                 sys.stdout.write("\rSaving tweets " + str(tcount))
                 sys.stdout.flush()
-                self.saveTweet(t)
+                self.saveTweet(t,table=table)
                 tcount += 1
         else:
             print("\nNo tweets returned.")
         #print("Total tweets saved: " + str(tcount))
 
-    def saveTweet(self, t):
+    def saveTweet(self, t, table):
         try:
-            if self.username==None: #timeline
-                query = session.query(Tweet).filter(Tweet.tweetId==t.id).one()
-            else:
-                query = session.query(TweetParty).filter(TweetParty.tweetId == t.id).one()
+            query = session.query(table).filter(table.tweetId==t.id).one()
         except NoResultFound:
             try:
                 query = session.query(TwitterUser).filter(TwitterUser.username == t.username).one()
@@ -51,30 +53,16 @@ class TwitterClient():
                 user = TwitterUser(username=t.username)
                 session.add(user)
 
-            if self.username==None:
-                print("Save timeline tweet")
-                tweet = Tweet(tweetId=t.id,
-                                permalink=t.permalink,
-                                username=t.username,
-                                text=t.text,
-                                date=t.date,
-                                retweets=t.retweets,
-                                favorites=t.favorites,
-                                mentions=t.mentions,
-                                hashtags=t.hashtags,
-                                geo=t.geo)
-            else:
-                print("Save username tweet")
-                tweet = TweetParty(tweetId=t.id,
-                              permalink=t.permalink,
-                              username=t.username,
-                              text=t.text,
-                              date=t.date,
-                              retweets=t.retweets,
-                              favorites=t.favorites,
-                              mentions=t.mentions,
-                              hashtags=t.hashtags,
-                              geo=t.geo)
+            tweet = table(tweetId=t.id,
+                            permalink=t.permalink,
+                            username=t.username,
+                            text=t.text,
+                            date=t.date,
+                            retweets=t.retweets,
+                            favorites=t.favorites,
+                            mentions=t.mentions,
+                            hashtags=t.hashtags,
+                            geo=t.geo)
             session.add(tweet)
             session.commit()
 
@@ -84,12 +72,11 @@ class TwitterClient():
                 self.query).setSince(self.startDate).setUntil(
                 self.endDate).setMaxTweets(self.tweetCount)
         else:
-            tweetCriteria = TweetCriteria().setUsername(self.username).setSince(self.startDate).setUntil(
-                self.endDate).setMaxTweets(self.tweetCount)
+            tweetCriteria = TweetCriteria().setUsername(self.username).setSince(self.startDate)\
+                .setUntil(self.endDate).setMaxTweets(self.tweetCount)
 
 
         tweets = TweetManager.getTweets(tweetCriteria=tweetCriteria, proxy=proxy)
-
         return tweets
 
 

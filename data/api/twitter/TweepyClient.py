@@ -1,4 +1,5 @@
-import tweepy
+import tweepy, unidecode as ud, datetime as dt, re
+from data.api.twitter.got.models import Tweet
 
 consumer_key = "uEIEwhUCqELdY1vd7lxBTdglE"
 consumer_secret = "obLlVTjKYEU9cRcyEw6otgJyUJGqn2nJXsKdLO0uvi7WYFDJvs"
@@ -47,12 +48,41 @@ class TweepyClient():
                 if not len(users)>0:
                     break
                 for user in users:
-                    user_ids.append(user.screen_name)
+                    user_ids.append(ud._unidecode(user.screen_name))
                 i+=1
         total_users = list(set(user_ids))
         print("Total users: " + str(len(total_users)))
         return total_users
 
+    def get_user_timeline_tweets(self, username, date_start, date_stop):
+        i = 0
+        tweets = []
+        while True:
+            stuff = self.api.user_timeline(screen_name=username, count=200,include_rts=True,page=i)
+            for status in stuff:
+                if date_start <= status.created_at.date() <= date_stop:
+                    tweet = Tweet()
+                    tweet.id = status.id
+                    tweet.permalink = ""
+                    tweet.username = username
+                    tweet.text = status.text
+                    tweet.date = dt.datetime.strptime(status.created_at.strftime('%Y-%m-%d %H:%M:%S'),'%Y-%m-%d %H:%M:%S')
+                    tweet.retweets = ''
+                    tweet.favorites = status.favorite_count
+                    tweet.mentions = " ".join(re.compile('(@\\w*)').findall(status.text))
+                    tweet.hashtags = " ".join(re.compile('(#\\w*)').findall(status.text))
+                    tweet.geo = status.geo
+                    tweets.append(tweet)
+                    print(type(tweet.date))
+                elif status.created_at.date() < date_start:
+                    print("Complete")
+                    return tweets
+            i+=1
+            print("PASS PAGE. Next: " + str(i))
+
+
 if __name__ == "__main__":
     client = TweepyClient()
-    client.get_user_names()
+    #client.get_user_names()
+    startdate, enddate = dt.date(2017, 8, 28), dt.date(2017, 10, 1)
+    client.get_user_timeline_tweets("Jmfmendonca",startdate,enddate)
