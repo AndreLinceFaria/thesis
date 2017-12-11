@@ -54,11 +54,15 @@ class TweepyClient():
         print("Total users: " + str(len(total_users)))
         return total_users
 
-    def get_user_timeline_tweets(self, username, date_start, date_stop):
+    def get_user_timeline_tweets(self, username, date_start, date_stop, threshold=200):
         i = 0
         tweets = []
         while True:
-            stuff = self.api.user_timeline(screen_name=username, count=200,include_rts=True,page=i)
+            try:
+                stuff = self.api.user_timeline(screen_name=username, count=200,include_rts=True,page=i)
+            except:
+                print("Exception while fetching user timeline tweets.")
+                break
             for status in stuff:
                 if date_start <= status.created_at.date() <= date_stop:
                     tweet = Tweet()
@@ -71,15 +75,16 @@ class TweepyClient():
                     tweet.favorites = status.favorite_count
                     tweet.mentions = " ".join(re.compile('(@\\w*)').findall(status.text))
                     tweet.hashtags = " ".join(re.compile('(#\\w*)').findall(status.text))
-                    tweet.geo = status.geo
+                    tweet.geo = ''
                     tweets.append(tweet)
-                    print(type(tweet.date))
                 elif status.created_at.date() < date_start:
-                    print("Complete")
+                    print("Exceed date.")
                     return tweets
-            i+=1
-            print("PASS PAGE. Next: " + str(i))
-
+            if i>threshold:
+                print("Threshold reached (" + str(threshold)+ ") with: " + str(len(tweets)) + " tweets to be saved.")
+                break;
+            i=i+1
+        return tweets
 
 if __name__ == "__main__":
     client = TweepyClient()

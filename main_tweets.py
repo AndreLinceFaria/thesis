@@ -40,7 +40,7 @@ def fetch_party_tweets():
             twitterClient.setStartDate(None)
             twitterClient.getTweetsAndSave(proxy=True)
 
-def save_tweepy_for_users(proxy = True):
+def save_tweepy_for_users(proxy = True, thld = 400):
 
     if proxy:
         from data.proxy.tor import TorProxy
@@ -61,7 +61,9 @@ def save_tweepy_for_users(proxy = True):
 
     startdate, enddate = date(2017, 8, 28), date(2017, 10, 1)
     for user in usernames:
-        tweets = tweepyClient.get_user_timeline_tweets(user,startdate,enddate)
+        print("user => [ " + str(user)+ " ]")
+        tweets = tweepyClient.get_user_timeline_tweets(user,startdate,enddate, threshold=thld)
+        print("Attempting to save: " + str(len(tweets)) + " tweets.")
         for t in tweets:
             twitterClient.saveTweet(t, table=Tweet)
 
@@ -82,4 +84,4 @@ def fetch_tweets():
 
 
 if __name__ == "__main__":
-    save_tweepy_for_users()
+    save_tweepy_for_users(thld=400)

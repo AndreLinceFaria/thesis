@@ -47,11 +47,11 @@ class StemmerPT():
 
 if __name__ == "__main__":
    #WNet
-   client = ClientWNPT()
-   res = client.get_synonyms("comida")
-   print(str(res))
+   #client = ClientWNPT()
+   #res = client.get_synonyms("comida")
+   #print(str(res))
 
    #Stemmer
    st = StemmerPT()
-   word = st.stem_word("estudar")
+   word = st.stem_word("estudando")
    print(word)
