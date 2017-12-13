@@ -5,3 +5,8 @@ https?://.*?\\s+
 \S*(\/)\S*
 (www)\S*
 \S*(.com|.pt)\S*
+http
+https
+html
+youtub
+youtu
