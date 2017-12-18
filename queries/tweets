@@ -1,4 +1,0 @@
-SELECT 
-    (SELECT COUNT(*) FROM tweet_party_parsed) as TP_Parsed,
-    (SELECT COUNT(*) FROM tweet_party ) as TP,
-    ((SELECT COUNT(*) FROM tweet_party) - (SELECT COUNT(*) FROM tweet_party_parsed)) as DIFF
