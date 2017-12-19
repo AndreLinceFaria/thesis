@@ -1,9 +1,9 @@
+from settings import *
 import re, os
 
 from utils.timeouts import exit_after
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-regexFile = str(dir_path) + '\/regex.txt'
+regexFile = join(os.path.dirname(os.path.realpath(__file__)),'regex.txt')
 
 def custom_regex(filename=regexFile):
     regext = []

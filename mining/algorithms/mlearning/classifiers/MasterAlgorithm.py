@@ -1,4 +1,6 @@
 from time import time, strftime
+from settings import *
+
 import datetime
 from mining.algorithms.mlearning.classifiers.NBayes import NBayes
 from mining.algorithms.mlearning.classifiers.NNet import NNet
@@ -37,7 +39,7 @@ class MasterAlgorithm:
     def train(self, tweets_train=None, save = False):
         dt = time()
         log = logging.getLogger('train-log')
-        log.addHandler(logging.FileHandler('logs/train-log['+datetime.datetime.today().strftime('%Y-%m-%d')+'].log'))
+        log.addHandler(logging.FileHandler(join(CLASS_LOGS_DIR,TRAIN_LOG_FORMAT)))
         log.setLevel(logging.DEBUG)
 
         log.debug("\n[MASTER ALGORITHM] Training: " + str(datetime.datetime.now()) + "\n")
@@ -79,7 +81,7 @@ class MasterAlgorithm:
 
         if save:
             for alg in self.algorithms:
-                p.save_model(alg.clf,'models/' + alg.name)
+                p.save_model(alg.clf,join(CLASS_MODELS_DIR,alg.name))
 
         return scores
 
@@ -91,14 +93,14 @@ class MasterAlgorithm:
 
         log = logging.getLogger('predict-log')
         log.addHandler(
-            logging.FileHandler('logs/predict-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'))
+            logging.FileHandler(join(CLASS_LOGS_DIR,PREDICT_LOG_FORMAT)))
         log.setLevel(logging.DEBUG)
 
         log.debug("\n[MASTER ALGORITHM] Predict: " + str(datetime.datetime.now()) + "\n")
 
         if load:
             for alg in self.algorithms:
-                model = p.load_model('models/' + alg.name)
+                model = p.load_model(join(CLASS_MODELS_DIR,alg.name))
                 if model != None:
                     alg.clf = model
 
@@ -147,7 +149,7 @@ class MasterAlgorithm:
             mx = lu.get_max(res)
             return mx[0]
         else:
-            self.__decideClass(data)
+            self.__decideClass(data,'average')
 
 
 if __name__ == "__main__":
