@@ -1,7 +1,7 @@
 import pickle
 import os, re
 
-def load_model(filename, load_literal=False):
+def load_model(filename):
     files = get_files_from_dir(filename)
     if len(files[0]) > 0:
         fname = os.path.join(files[1], files[0][len(files[0])-1])
@@ -11,7 +11,7 @@ def load_model(filename, load_literal=False):
         return model
     return None
 
-def save_model(model, filename, save_literal=False):
+def save_model(model, filename):
     files = get_files_from_dir(filename)
     fname = filename + "-" + str(len(files[0])) + ".pk"
     print("Saving model to: " + fname)

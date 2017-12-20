@@ -1,14 +1,9 @@
-
+from settings import *
 from data.utils.parsers import ParserCSV, ParserJSON
-
-results = '././files/autarquicas17-resultados.csv'
-config = '././files/parties-config/parties-config-1.json'
-parties_twitter = '././files/parties-config/parties-twitter.json'
-
 
 class ResultsParser():
 
-    def __init__(self, filenameResults = results, filenameConfig = config):
+    def __init__(self, filenameResults = RESULTS_CSV, filenameConfig = CONFIG_1_JSON):
         self.pconfig = PartiesConfig(filenameConfig)
         self.parser = ParserCSV(filenameResults)
         self.results = []
@@ -55,7 +50,7 @@ class Result():
 
 class PartiesConfig():
 
-    def __init__(self, filename=config):
+    def __init__(self, filename=CONFIG_1_JSON):
         self.parser = ParserJSON(filename)
         self.configs = []
         self.setup()
@@ -90,7 +85,7 @@ class Config():
 
 class PartiesTwitterParser():
 
-    def __init__(self,filename=parties_twitter):
+    def __init__(self,filename=PARTIES_TWITTER_JSON):
         self.parser = ParserJSON(file=filename)
         self.parties = []
         self.setup()

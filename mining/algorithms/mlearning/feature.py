@@ -1,4 +1,4 @@
-import os
+from settings import *
 from data.database.database import getSession, TweetParty
 from data.utils.parserUtil import PartiesTwitterParser
 import mining.algorithms.RAKE.rake as rake
@@ -8,14 +8,10 @@ import numpy as np
 from collections import Counter
 from copy import deepcopy
 from sklearn.model_selection import train_test_split
-from utils.timeouts import exit_after
 
 rk = rake.Rake()
 
-print("Parties Config: " + str(os.path.join(os.path.dirname(__file__),r'..\..\..\files\parties-config','parties-twitter.json')))
-print("Database: " + str(os.path.join(os.path.dirname(__file__),'..\..\..\database.sqlite')))
-
-session = getSession(path=os.path.join(os.path.dirname(__file__),'..\..\..\database.sqlite'))
+session = getSession(DB)
 
 def get_tweets(count,table=TweetParty, cbu = True):
     if not count or count==None:
@@ -38,14 +34,10 @@ def get_user_tweets(count):
         return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username')
     return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username LIMIT :count',{'count':count})
 
-def get_ptParser(filename = None):
-    if filename == None:
-        filename = 'parties-twitter.json'
-    fname = os.path.join(os.path.dirname(__file__),r'..\..\..\files\parties-config',str(filename))
-    return PartiesTwitterParser(fname)
+def get_ptParser():
+    return PartiesTwitterParser()
 
 def rakec(content):
-    #print("Raking: " + content.encode('utf-8'))
     tkw = rake.get_top_scoring_candidates(
         rk.run(
             ud._unidecode(content)))
@@ -53,16 +45,15 @@ def rakec(content):
     for tstr in [x[0] for x in tkw]:
         raked_text += tstr + " "
     raked_text = rs.remove_regex(raked_text)
-    #print("Raked text: " + raked_text)
     return raked_text
 
-def format_tweets(tweets, pfname = None, timeout_seconds = 10):
+def format_tweets(tweets):
     print("Formatting " + str(len(tweets)) + " tweets...")
     tlist = []
     i = 0
     missed_tweets = 0
     for tweet in tweets:
-        label = get_ptParser(pfname).getLabelFromUsername(str(tweet.username))
+        label = get_ptParser().getLabelFromUsername(str(tweet.username))
         print("Username: " + str(tweet.username) + " Label: " + str(label))
         if label != None:
             try:
@@ -88,9 +79,9 @@ def format_tweets(tweets, pfname = None, timeout_seconds = 10):
 
 class FeatureManager():
 
-    def get_features_most_common(self, tweets, nr_features, pfname=None):
+    def get_features_most_common(self, tweets, nr_features):
         print("Generating features...")
-        tweets = format_tweets(tweets=tweets, pfname=pfname)
+        tweets = format_tweets(tweets=tweets)
         print("TWEETS FORMATED")
         words = []
         for t in tweets:
@@ -103,11 +94,9 @@ class FeatureManager():
                 del d[word]
 
         most_common = d.most_common(nr_features)
-        # print("Most common ", nr_features, " words")
         features = []
         for word in most_common:
             features.append(word[0])
-            # print(word[0] + "(" + str(word[1]) + "occurrences)")
         self.features = features
         return features
 
@@ -130,7 +119,6 @@ class DatasetManager():
                 if word in features:
                     f = features.index(word)
                     X[n][f] += 1
-            # Build output labels (Y)
             Y[n] = labels_list.index(tweet[1])
 
         return (X, Y)
@@ -160,7 +148,6 @@ class DatasetManager():
             for word in words_in_text:
                 if word in features:
                     f = features.index(word)
-                    #print("word in features: " + word + " Index: " + str(f))
                     X[f] += 1
             return X.reshape(1, -1)
         else:

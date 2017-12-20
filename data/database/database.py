@@ -1,4 +1,4 @@
-import os, sys
+from settings import *
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -37,7 +37,7 @@ class TweetParty(Base):
 # create session
 from sqlalchemy.orm import sessionmaker
 
-def getSession(path='database.sqlite'):
+def getSession(path=DB):
     # create engine
     from sqlalchemy import create_engine
     engine = create_engine('sqlite:///' + path)

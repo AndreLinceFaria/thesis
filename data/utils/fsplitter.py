@@ -1,5 +1,4 @@
-import time,os,shutil
-from zipfile import ZipFile
+import os,shutil
 
 readsize = 1024
 bytes = 99000000
@@ -46,8 +45,4 @@ def join(fromdir, tofile, zip=False, remove_dir = True):
     output.close()
     if remove_dir:
         shutil.rmtree(fromdir)
-
-#split(fromfile='database.sqlite',todir='database',zip=True)
-#time.sleep(10)
-#join(fromdir='database', tofile='database.sqlite', zip=True)
 

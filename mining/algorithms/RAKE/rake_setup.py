@@ -3,9 +3,8 @@ import re, os
 
 from utils.timeouts import exit_after
 
-regexFile = join(os.path.dirname(os.path.realpath(__file__)),'regex.txt')
 
-def custom_regex(filename=regexFile):
+def custom_regex(filename=REGEX_FILE):
     regext = []
     for line in open(filename):
         if line.strip()[0:1] != "#":

@@ -1,4 +1,4 @@
-from time import time, strftime
+from time import time
 from settings import *
 
 import datetime
@@ -25,7 +25,7 @@ class MasterAlgorithm:
         self.cv = None
         self.latest_scores = None
 
-    def setup(self, fntg=500, fnf=50, algs = None):
+    def setup(self, fntg=MA_FEATURES_NR_TWEETS_GROUP, fnf=MA_FEATURES_NR_FEATURES, algs = MA_ALGS):
         self.features = fm.get_features_most_common(tweets=f.get_tweets(count=fntg,cbu=True), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
         print("Features: " + str(self.features))
@@ -137,24 +137,24 @@ class MasterAlgorithm:
         log.debug(table_final)
         log.debug("Predict time: " + str(round(time() - dt, 2)) + " seconds.")
 
-        plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
-        plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
+        plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
+        plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
 
-    def __decideClass(self,data,decision='average'):
+    def __decideClass(self,data,decision=MA_DECISION):
         if decision == 'average':
             return max(set(data), key=data.count)
         elif decision =='weighted' and self.latest_scores!=None:
-            # ADD WEIGHTED LOGIC
             res = lu.accumulate(zip(data,self.latest_scores))
             mx = lu.get_max(res)
             return mx[0]
         else:
+            raise Warning("Not possible to decide with WEIGHTED logic. There are no train results.")
             self.__decideClass(data,'average')
 
 
 if __name__ == "__main__":
     alg = MasterAlgorithm()
-    alg.setup(fntg=50, fnf=50)
-    scores = alg.train(tweets_train=100,save=True)
-    alg.predict(tweets_predict=10,load=True)
+    alg.setup(fntg=2, fnf=20)
+    scores = alg.train(tweets_train=30,save=True)
+    alg.predict(tweets_predict=10,load=False)
     print("END")
