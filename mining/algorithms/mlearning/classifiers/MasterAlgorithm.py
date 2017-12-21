@@ -9,7 +9,6 @@ from mining.algorithms.mlearning.classifiers.SVM import SVM
 from sklearn.model_selection import StratifiedKFold
 import mining.algorithms.mlearning.feature as f
 import mining.algorithms.mlearning.persist as p
-import logging
 from beautifultable import BeautifulTable
 import utils.plots as plots
 import utils.list_utils as lu
@@ -28,21 +27,16 @@ class MasterAlgorithm:
     def setup(self, fntg=MA_FEATURES_NR_TWEETS_GROUP, fnf=MA_FEATURES_NR_FEATURES, algs = MA_ALGS):
         self.features = fm.get_features_most_common(tweets=f.get_tweets(count=fntg,cbu=True), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
-        print("Features: " + str(self.features))
-        print("Labels: " + str(self.labels))
+        logm.info("\nFeatures: " + str(self.features))
+        logm.info("\nLabels: " + str(self.labels))
         if algs==None or not isinstance(algs, list):
             self.algorithms = [NNet(), NBayes(), KNN(), SVM()]
         else:
-            print("MA-setup: Training " + str(len(algs)) + " algorithm/s.")
+            logm.info("\n[MASTER ALGORITHM] setup -> train: " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs
 
     def train(self, tweets_train=None, save = False):
-        dt = time()
-        log = logging.getLogger('train-log')
-        log.addHandler(logging.FileHandler(join(CLASS_LOGS_DIR,TRAIN_LOG_FORMAT)))
-        log.setLevel(logging.DEBUG)
-
-        log.debug("\n[MASTER ALGORITHM] Training: " + str(datetime.datetime.now()) + "\n")
+        logtr.info("\n[MASTER ALGORITHM] Training")
 
         if self.labels == None or self.features == None:
             self.setup()
@@ -75,9 +69,7 @@ class MasterAlgorithm:
 
         self.latest_scores = scores
 
-        log.debug(str(table))
-        log.debug("Training time: " + str(round(time()-dt, 2)) + " seconds.")
-        
+        logtr.info("\n" + str(table))
 
         if save:
             for alg in self.algorithms:
@@ -91,13 +83,7 @@ class MasterAlgorithm:
         if self.labels == None or self.features == None:
             self.setup()
 
-        log = logging.getLogger('predict-log')
-        log.addHandler(
-            logging.FileHandler(join(CLASS_LOGS_DIR,PREDICT_LOG_FORMAT)))
-        log.setLevel(logging.DEBUG)
-
-        log.debug("\n[MASTER ALGORITHM] Predict: " + str(datetime.datetime.now()) + "\n")
-
+        logts.info("\n[MASTER ALGORITHM] Predict")
         if load:
             for alg in self.algorithms:
                 model = p.load_model(join(CLASS_MODELS_DIR,alg.name))
@@ -122,7 +108,7 @@ class MasterAlgorithm:
             table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(tmp_list,decision='weighted')])
             final_results.append([i,tweet.username] + tmp_list)
             i+=1
-        log.debug(table)
+        logts.info("\n" + str(table))
 
         results_final = [0] * len(self.labels)
         for party in list(table['Final (Average)']):
@@ -132,10 +118,8 @@ class MasterAlgorithm:
         table_final.column_headers = [str(lab.decode('utf-8')) for lab in self.labels]
         table_final.append_row(results_final)
 
-        log.debug("\n [Prediction Count] \n")
-
-        log.debug(table_final)
-        log.debug("Predict time: " + str(round(time() - dt, 2)) + " seconds.")
+        logts.info("\n [Prediction Count] \n")
+        logts.info("\n" + str(table_final))
 
         plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
         plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
@@ -148,6 +132,7 @@ class MasterAlgorithm:
             mx = lu.get_max(res)
             return mx[0]
         else:
+            logts.info("\n Not possible to decide with WEIGHTED logic. There are no train results")
             raise Warning("Not possible to decide with WEIGHTED logic. There are no train results.")
             self.__decideClass(data,'average')
 

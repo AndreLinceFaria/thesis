@@ -1,6 +1,8 @@
 import sys,os
 sys.path.insert(0, str(os.path.realpath(__file__)))
 import datetime
+import utils.log as log
+import utils.file_utils as fu
 
 # ======================
 # Functions
@@ -13,6 +15,8 @@ def join(path1,path2):
 # Files and Directories
 # ======================
 
+CLEAN_DIRS = True
+
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 DB = os.path.join(BASE_DIR,"database.sqlite")
@@ -21,17 +25,26 @@ CLASS_MODELS_DIR = os.path.join(BASE_DIR,"static/results/models/")
 
 CLASS_LOGS_DIR = os.path.join(BASE_DIR,"static/results/logs/")
 
-# === Figures ===
-
 FIGURES_DIR = join(BASE_DIR,"static/results/figures/")
+
+if CLEAN_DIRS:
+    fu.remove_from_dir(CLASS_LOGS_DIR)
+    fu.remove_from_dir(CLASS_MODELS_DIR)
+    fu.remove_from_dir(FIGURES_DIR)
+
+# === Figures ===
 
 FIGURES_SAVE_AS_FORMAT = "[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png"
 
 # === Logs ===
 
 PREDICT_LOG_FORMAT = 'predict-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
-TRAIN_LOG_FORMAT = 'predict-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
+TRAIN_LOG_FORMAT = 'train-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
+MAIN_LOG_FORMAT = 'main-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
 
+logtr = log.get_log('train_log',join(CLASS_LOGS_DIR,TRAIN_LOG_FORMAT))
+logts = log.get_log('predict_log',join(CLASS_LOGS_DIR,PREDICT_LOG_FORMAT))
+logm = log.get_log('main_log',join(CLASS_LOGS_DIR,MAIN_LOG_FORMAT))
 
 # === Parsers & Configs ===
 

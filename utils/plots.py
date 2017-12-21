@@ -85,7 +85,7 @@ def plot_predictions_per_label(data, labels,save_as):
     ## add a legend
     ax.legend()
 
-    plt.show()
+    #plt.show()
     path = os.path.join(FIGURES_DIR, "Prediciton-Alg_label" + save_as)
     plt.savefig(path)
 
@@ -129,7 +129,7 @@ def plot_predictions_per_alg(data, labels,save_as):
     ## add a legend
     ax.legend()
 
-    plt.show()
+    #plt.show()
     path = os.path.join(FIGURES_DIR, "Prediciton-Label_Alg" + save_as)
     plt.savefig(path)
 
