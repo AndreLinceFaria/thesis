@@ -16,7 +16,6 @@ class ResultsParser():
             votos, votantes, presidentes, maiorias, concelhos, mandatos = 0,0,0,0,0,0
             for party in config.parties:
                 row = self.parser.getRow(colname='CAMARAS', colvalue=party)
-                #print("Party: " + row['CAMARAS'] + " Votos: " + row['VOTOS'])
                 votos += float(row['VOTOS'].strip("%"))
                 votantes += int(row['VOTANTES'])
                 presidentes += int(row['PRESIDENTES'])

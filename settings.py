@@ -41,10 +41,12 @@ FIGURES_SAVE_AS_FORMAT = "[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%
 PREDICT_LOG_FORMAT = 'predict-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
 TRAIN_LOG_FORMAT = 'train-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
 MAIN_LOG_FORMAT = 'main-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
+GLOBAL_LOG_FORMAT = 'global-log[' + datetime.datetime.today().strftime('%Y-%m-%d') + '].log'
+GLOBAL_LOG = join(CLASS_LOGS_DIR,GLOBAL_LOG_FORMAT)
 
-logtr = log.get_log('train_log',join(CLASS_LOGS_DIR,TRAIN_LOG_FORMAT))
-logts = log.get_log('predict_log',join(CLASS_LOGS_DIR,PREDICT_LOG_FORMAT))
-logm = log.get_log('main_log',join(CLASS_LOGS_DIR,MAIN_LOG_FORMAT))
+logtr = log.get_log('train_log',join(CLASS_LOGS_DIR,TRAIN_LOG_FORMAT),global_log=GLOBAL_LOG)
+logts = log.get_log('predict_log',join(CLASS_LOGS_DIR,PREDICT_LOG_FORMAT), global_log=GLOBAL_LOG)
+logm = log.get_log('main_log',join(CLASS_LOGS_DIR,MAIN_LOG_FORMAT),global_log=GLOBAL_LOG)
 
 # === Parsers & Configs ===
 

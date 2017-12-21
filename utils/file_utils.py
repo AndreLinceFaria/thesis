@@ -5,7 +5,7 @@ bytes = 99000000
 chunksize = int(bytes)
 
 def split(fromfile, todir, chunksize=chunksize, zip=False, remove_file=True):
-    print("Splitting file: " + fromfile)
+    #print("Splitting file: " + fromfile)
     if not os.path.exists(todir):  # caller handles errors
         os.mkdir(todir)
     '''else:
@@ -28,7 +28,7 @@ def split(fromfile, todir, chunksize=chunksize, zip=False, remove_file=True):
     return partnum
 
 def join(fromdir, tofile, zip=False, remove_dir = True):
-    print("Joining into file: " + tofile)
+    #print("Joining into file: " + tofile)
     output = open(tofile, 'wb')
     parts  = os.listdir(fromdir)
     parts.sort(  )

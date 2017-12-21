@@ -9,19 +9,16 @@ class ClientWNPT():
 
     def __make_request(self,request_url):
         res = requests.get(request_url)
-        print(res)
         return json.loads(res.text)
 
     def __get_sysnsets_for_word(self,word):
         url = self.base_url + "por/search/" + word
         data = self.__make_request(url)
-        print(str(data))
         return data
 
     def __get_words_from_synset(self,synset):
         url = self.base_url + "por/synset/" + re.sub(self.regexp_pt, '', str(synset))
         data = self.__make_request(url)
-        print(str(data))
         return data
 
     def get_synonyms(self,word):
@@ -42,16 +39,3 @@ class StemmerPT():
 
     def stem_word_list(self,word_list):
         return list(set(self.stemmer.stemWords(word_list)))
-
-
-
-if __name__ == "__main__":
-   #WNet
-   #client = ClientWNPT()
-   #res = client.get_synonyms("comida")
-   #print(str(res))
-
-   #Stemmer
-   st = StemmerPT()
-   word = st.stem_word("estudando")
-   print(word)

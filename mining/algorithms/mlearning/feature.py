@@ -21,7 +21,7 @@ def get_tweets(count,table=TweetParty, cbu = True):
         tweets = []
         for user in users:
             [tweets.append(t) for t in session.execute("SELECT tp.* FROM tweet_party tp WHERE tp.username = \"" + ud._unidecode(user.username) + "\" ORDER BY RANDOM() LIMIT " + str(count))]
-        print("Fetched " + str(count) + " Random tweets per party which resulted in " + str(len(tweets)) + " tweets in Total")
+        logm.info("Fetched " + str(count) + " Random tweets per party which resulted in " + str(len(tweets)) + " tweets in Total")
         return tweets
     else:
         return session.query(table).filter().limit(count).all()
@@ -48,24 +48,24 @@ def rakec(content):
     return raked_text
 
 def format_tweets(tweets):
-    print("Formatting " + str(len(tweets)) + " tweets...")
+    logm.info("Formatting " + str(len(tweets)) + " tweets...")
     tlist = []
     i = 0
     missed_tweets = 0
     for tweet in tweets:
         label = get_ptParser().getLabelFromUsername(str(tweet.username))
-        print("Username: " + str(tweet.username) + " Label: " + str(label))
+        logm.info("Username: " + str(tweet.username) + " Label: " + str(label))
         if label != None:
             try:
                 raked_text = rakec(tweet.text)
             except KeyboardInterrupt:
-                print("timed out.")
+                logm.info("timed out.")
                 raked_text = None
             if raked_text != None:
                 tup = (raked_text, label)
-                print("idx: " + str(i) + " tid: " + str(tweet.tweetId))
-                print("original: " + str(ud._unidecode(tweet.text)))
-                print("result: " + str(raked_text))
+                logm.info("id: " + str(i) + " tid: " + str(tweet.tweetId))
+                logm.info("original: " + str(ud._unidecode(tweet.text)))
+                logm.info("result: " + str(raked_text) + "\n")
                 tlist.append(
                     tup
                 )
@@ -73,16 +73,15 @@ def format_tweets(tweets):
         else:
             missed_tweets +=1
 
-    print("formated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.")
+    logm.info("##########\nformated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.\n ###########")
 
     return tlist
 
 class FeatureManager():
 
     def get_features_most_common(self, tweets, nr_features):
-        print("Generating features...")
+        logm.info("Generating features...")
         tweets = format_tweets(tweets=tweets)
-        print("TWEETS FORMATED")
         words = []
         for t in tweets:
             words += t[0].split()

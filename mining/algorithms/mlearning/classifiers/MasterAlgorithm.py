@@ -27,8 +27,8 @@ class MasterAlgorithm:
     def setup(self, fntg=MA_FEATURES_NR_TWEETS_GROUP, fnf=MA_FEATURES_NR_FEATURES, algs = MA_ALGS):
         self.features = fm.get_features_most_common(tweets=f.get_tweets(count=fntg,cbu=True), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
-        logm.info("\nFeatures: " + str(self.features))
-        logm.info("\nLabels: " + str(self.labels))
+        logm.info("Features: " + str(self.features))
+        logm.info("Labels: " + str(self.labels))
         if algs==None or not isinstance(algs, list):
             self.algorithms = [NNet(), NBayes(), KNN(), SVM()]
         else:
@@ -36,7 +36,9 @@ class MasterAlgorithm:
             self.algorithms = algs
 
     def train(self, tweets_train=None, save = False):
-        logtr.info("\n[MASTER ALGORITHM] Training")
+        logtr.info("\n========================================================================"
+                   "\n[MASTER ALGORITHM] Training\n"
+                   "========================================================================\n")
 
         if self.labels == None or self.features == None:
             self.setup()
@@ -83,7 +85,9 @@ class MasterAlgorithm:
         if self.labels == None or self.features == None:
             self.setup()
 
-        logts.info("\n[MASTER ALGORITHM] Predict")
+        logts.info("\n========================================================================"
+                   "\n[MASTER ALGORITHM] Prediction\n"
+                   "========================================================================\n")
         if load:
             for alg in self.algorithms:
                 model = p.load_model(join(CLASS_MODELS_DIR,alg.name))
@@ -104,6 +108,12 @@ class MasterAlgorithm:
                 x = dm.get_ds_X(tweet.text, self.features)
                 pred, label = alg.predict_with_label(x, self.labels)
                 tmp_list[idx] = label
+                logm.info("\n########################################################################################################\n"
+                          "[Prediction] [USER: " + tweet.username + " ] [RESULT: " + label + " ]\n" + ""
+                        "############################################################################################################"
+                            "\n[TEXT] \n"
+                        "------------------------------------------------------------------------------------------------------------\n"
+                         + tweet.text + "\n\n")
 
             table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(tmp_list,decision='weighted')])
             final_results.append([i,tweet.username] + tmp_list)
@@ -118,7 +128,7 @@ class MasterAlgorithm:
         table_final.column_headers = [str(lab.decode('utf-8')) for lab in self.labels]
         table_final.append_row(results_final)
 
-        logts.info("\n [Prediction Count] \n")
+        logts.info("[Prediction Count] \n")
         logts.info("\n" + str(table_final))
 
         plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
@@ -132,7 +142,7 @@ class MasterAlgorithm:
             mx = lu.get_max(res)
             return mx[0]
         else:
-            logts.info("\n Not possible to decide with WEIGHTED logic. There are no train results")
+            logts.info("Not possible to decide with WEIGHTED logic. There are no train results")
             raise Warning("Not possible to decide with WEIGHTED logic. There are no train results.")
             self.__decideClass(data,'average')
 
@@ -142,4 +152,4 @@ if __name__ == "__main__":
     alg.setup(fntg=2, fnf=20)
     scores = alg.train(tweets_train=30,save=True)
     alg.predict(tweets_predict=10,load=False)
-    print("END")
+    logm.info("END")

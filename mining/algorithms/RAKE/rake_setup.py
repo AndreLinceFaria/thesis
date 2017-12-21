@@ -1,5 +1,5 @@
 from settings import *
-import re, os
+import re
 
 from utils.timeouts import exit_after
 
@@ -19,6 +19,6 @@ def remove_regex(text):
         for regex in custom_regex():
             tmp = re.sub(re.compile(regex), '', tmp)
     except Exception as e:
-        print("Exception in remove_regex: " + str(e))
+        logm.info("Exception in remove_regex: " + str(e))
         tmp = None
     return tmp
