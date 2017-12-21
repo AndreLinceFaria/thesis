@@ -1,4 +1,4 @@
-import data.utils.fsplitter as fs
+import utils.fsplitter as fs
 from settings import *
 
 files_dir = join(BASE_DIR,'database/')
