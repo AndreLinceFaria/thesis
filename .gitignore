@@ -100,13 +100,8 @@ ENV/
 # mypy
 .mypy_cache/
 
-.idea
+# Project
+
 .idea/
-.idea/*
-/database.sqlite
-database.sqlite
-mining/algorithms/features/database.sqlite
-!/database.sqlite
-/mining/algorithms/mlearning/classifiers/logs/*
-/files/figures/*
-**/logs/*
+**/database.sqlite
+/static/results/
