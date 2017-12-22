@@ -58,6 +58,9 @@ PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitt
 # Algorithms
 # ======================
 
+FEATURE_STEMMING = True
+FEATURE_SYNSET = False
+
 # === RAKE ===
 
 REGEX_FILE = join(BASE_DIR,"static/config/rake/regex.txt")

@@ -38,4 +38,8 @@ class StemmerPT():
         return self.stemmer.stemWord(word)
 
     def stem_word_list(self,word_list):
-        return list(set(self.stemmer.stemWords(word_list)))
+        stem_list = self.stemmer.stemWords(word_list)
+        return list(sorted(set(stem_list),key=stem_list.index))
+
+
+STEMMER = StemmerPT()

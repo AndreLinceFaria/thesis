@@ -8,6 +8,7 @@ import numpy as np
 from collections import Counter
 from copy import deepcopy
 from sklearn.model_selection import train_test_split
+import mining.algorithms.dictionary.wordpt as wpt
 
 rk = rake.Rake()
 
@@ -86,6 +87,9 @@ class FeatureManager():
         for t in tweets:
             words += t[0].split()
 
+        if FEATURE_STEMMING:
+            words = wpt.STEMMER.stem_word_list(words)
+
         d = Counter(words)
 
         for word in deepcopy(d):
@@ -136,6 +140,8 @@ class DatasetManager():
                 n = tweets_formated.index(tweet)
                 words_in_tweet = tweet[0].split()
                 for word in words_in_tweet:
+                    if FEATURE_STEMMING:
+                        word = wpt.STEMMER.stem_word(word)
                     if word in features:
                         f = features.index(word)
                         X[n][f] += 1
@@ -145,6 +151,8 @@ class DatasetManager():
             X = np.zeros(F)
             words_in_text = raked_tweets.split()
             for word in words_in_text:
+                if FEATURE_STEMMING:
+                    word = wpt.STEMMER.stem_word(word)
                 if word in features:
                     f = features.index(word)
                     X[f] += 1
