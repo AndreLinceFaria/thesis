@@ -73,7 +73,7 @@ def format_tweets(tweets):
         else:
             missed_tweets +=1
 
-    logm.info("##########\nformated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.\n ###########")
+    logm.info("\n##########\nFormated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.\n ###########")
 
     return tlist
 

@@ -86,7 +86,7 @@ def plot_predictions_per_label(data, labels,save_as):
     ax.legend()
 
     #plt.show()
-    path = os.path.join(FIGURES_DIR, "Prediciton-Alg_label" + save_as)
+    path = os.path.join(FIGURES_DIR, "Prediciton-Alg_label_" + save_as)
     plt.savefig(path)
 
 
@@ -130,9 +130,5 @@ def plot_predictions_per_alg(data, labels,save_as):
     ax.legend()
 
     #plt.show()
-    path = os.path.join(FIGURES_DIR, "Prediciton-Label_Alg" + save_as)
+    path = os.path.join(FIGURES_DIR, "Prediciton-Label_Alg_" + save_as)
     plt.savefig(path)
-
-
-if __name__ == "__main__":
-    pass
