@@ -100,6 +100,15 @@ class MasterAlgorithm:
 
         final_results = []
         final_results.append(["",""] + [alg.name for alg in self.algorithms])
+
+        if REMOVE_LIMITS:
+            logts.info("Removing end tweets.")
+            tweets = sorted(tweets, key=lambda x: len(x.text))
+            limit_remove = int(len(tweets) * LIMITS_PERCENTAGE)
+            logts.info("Removing first and last " + str(limit_remove) + " user tweets.")
+            del tweets[-limit_remove:]
+            del tweets[:limit_remove]
+
         i = 0
         for tweet in tweets:
             tmp_list = [''] * len(self.algorithms)
@@ -132,7 +141,7 @@ class MasterAlgorithm:
         logts.info("\n" + str(table_final))
 
         plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
-        plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
+        #plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
 
     def __decideClass(self,data,decision=MA_DECISION):
         if decision == 'average':

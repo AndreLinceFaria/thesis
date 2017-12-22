@@ -59,7 +59,10 @@ PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitt
 # ======================
 
 FEATURE_STEMMING = True
-FEATURE_SYNSET = False
+FEATURE_SYNSET = False # not configured
+
+REMOVE_LIMITS = True
+LIMITS_PERCENTAGE = 0.1
 
 # === RAKE ===
 
