@@ -1,5 +1,5 @@
 from mining.algorithms.mlearning import persist as p
-from mining.algorithms.mlearning.classifiers import models_path
+from settings import *
 
 class Classifier(object):
 
@@ -9,13 +9,13 @@ class Classifier(object):
         self.clf = None
 
     def load(self, fname):
-        self.clf = p.load_model(models_path + fname)
+        self.clf = p.load_model(join(CLASS_MODELS_DIR, fname))
 
     def create(self):
         pass
 
     def save(self, fname):
-        p.save_model(self.clf, models_path + fname)
+        p.save_model(self.clf, join(CLASS_MODELS_DIR,fname))
 
     def train(self, x_train, y_train):
         self.clf.fit(x_train, y_train)

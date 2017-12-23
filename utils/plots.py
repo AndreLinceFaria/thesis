@@ -1,4 +1,4 @@
-
+from settings import *
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
@@ -43,7 +43,7 @@ def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
                  label="Cross-validation score")
 
         plt.legend(loc="best")
-    path = os.path.join(os.path.dirname(__file__), r'..\files\figures', "Learning curve" + save_as)
+    path = os.path.join(FIGURES_DIR, "Learning curve" + save_as)
     plt.savefig(path)
 
 def plot_predictions_per_label(data, labels,save_as):
@@ -85,8 +85,8 @@ def plot_predictions_per_label(data, labels,save_as):
     ## add a legend
     ax.legend()
 
-    plt.show()
-    path = os.path.join(os.path.dirname(__file__), r'..\files\figures', "Prediciton-Alg_label" + save_as)
+    #plt.show()
+    path = os.path.join(FIGURES_DIR, "Prediciton-Alg_label_" + save_as)
     plt.savefig(path)
 
 
@@ -129,10 +129,6 @@ def plot_predictions_per_alg(data, labels,save_as):
     ## add a legend
     ax.legend()
 
-    plt.show()
-    path = os.path.join(os.path.dirname(__file__), r'..\files\figures', "Prediciton-Label_Alg" + save_as)
+    #plt.show()
+    path = os.path.join(FIGURES_DIR, "Prediciton-Label_Alg_" + save_as)
     plt.savefig(path)
-
-
-if __name__ == "__main__":
-    pass

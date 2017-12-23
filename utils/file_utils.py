@@ -1,12 +1,11 @@
-import time,os,shutil
-from zipfile import ZipFile
+import os,shutil
 
 readsize = 1024
 bytes = 99000000
 chunksize = int(bytes)
 
 def split(fromfile, todir, chunksize=chunksize, zip=False, remove_file=True):
-    print("Splitting file: " + fromfile)
+    #print("Splitting file: " + fromfile)
     if not os.path.exists(todir):  # caller handles errors
         os.mkdir(todir)
     '''else:
@@ -29,7 +28,7 @@ def split(fromfile, todir, chunksize=chunksize, zip=False, remove_file=True):
     return partnum
 
 def join(fromdir, tofile, zip=False, remove_dir = True):
-    print("Joining into file: " + tofile)
+    #print("Joining into file: " + tofile)
     output = open(tofile, 'wb')
     parts  = os.listdir(fromdir)
     parts.sort(  )
@@ -47,7 +46,13 @@ def join(fromdir, tofile, zip=False, remove_dir = True):
     if remove_dir:
         shutil.rmtree(fromdir)
 
-#split(fromfile='database.sqlite',todir='database',zip=True)
-#time.sleep(10)
-#join(fromdir='database', tofile='database.sqlite', zip=True)
 
+def remove_from_dir(dir):
+    for file in os.listdir(dir):
+        file_path = os.path.join(dir, file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path): shutil.rmtree(file_path)
+        except Exception as e:
+            print(e)

@@ -1,4 +1,4 @@
-# Implementation of RAKE - Rapid Automtic Keyword Exraction algorithm
+# Implementation/Adaptation of RAKE - Rapid Automtic Keyword Exraction algorithm
 # as described in:
 # Rose, S., D. Engel, N. Cramer, and W. Cowley (2010). 
 # Automatic keyword extraction from indi-vidual documents. 
@@ -8,6 +8,7 @@ import re
 import operator
 
 from utils.timeouts import exit_after
+from settings import *
 
 debug = False
 test = False
@@ -127,11 +128,10 @@ def generate_candidate_keyword_scores(phrase_list, word_score):
     return keyword_candidates
 
 import os
-dir_path = os.path.dirname(os.path.realpath(__file__))
-stopwords = str(dir_path) + '\stopwords-pt.txt'
+
 
 class Rake(object):
-    def __init__(self, stop_words_path=stopwords):
+    def __init__(self, stop_words_path=STOPWORDS_FILE):
         self.stop_words_path = stop_words_path
         self.__stop_words_pattern = build_stop_word_regex(stop_words_path)
 

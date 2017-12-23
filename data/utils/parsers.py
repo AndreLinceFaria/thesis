@@ -12,7 +12,7 @@ class ParserCSV():
             reader = csv.DictReader(csvfile)
             for i,row in enumerate(reader):
                 if row[colname] == colvalue and index<0:
-                    #print("found at index: " + str(i))
+                    #logm.info("found at index: " + str(i))
                     return row
                 elif i==index:
                     return row
