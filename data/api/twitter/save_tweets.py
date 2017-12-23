@@ -1,8 +1,7 @@
 from datetime import date, datetime, timedelta
-from sys import stdout,argv
+from sys import stdout
 from data.database.database import Tweet, TwitterUser, TweetParty
 import unidecode as ud
-import sys
 
 from data.api.twitter.TwitterClient import TwitterClient
 from data.api.twitter.TweepyClient import TweepyClient
@@ -10,7 +9,7 @@ from data.utils.parserUtil import PartiesTwitterParser
 from data.database import database as database
 
 twitterClient = TwitterClient()
-partiesTP = PartiesTwitterParser(filename='files/parties-config/parties-twitter.json')
+partiesTP = PartiesTwitterParser()
 tweepyClient = TweepyClient()
 session = database.getSession()
 
@@ -69,12 +68,6 @@ def save_tweepy_for_users(proxy = True, thld = 400):
 
     if proxy:
         tor.stop_tor()
-
-    #missing: save usernames to database
-
-def get_user_tweets_and_save():
-    # missing: save all user tweets to database
-    pass
 
 def fetch_tweets():
     #Get timeline tweets

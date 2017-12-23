@@ -1,17 +1,17 @@
-import data.utils.fsplitter as fs
+import utils.file_utils as fs
+from settings import *
 
-import os
+files_dir = join(BASE_DIR,'database/')
+filename = join(BASE_DIR,'database.sqlite')
 
+def create_db():
+    if os.path.exists(files_dir):
+        fs.join(fromdir=files_dir, tofile=filename,zip = False)
 
-base_dir = str(os.path.dirname(os.path.realpath(__file__)))
-files_dir = str(str(base_dir) + '\database')
-filename = str(str(base_dir) + '\database.sqlite')
+def clear_db():
+    if not os.path.exists(files_dir):
+        fs.split(fromfile=filename, todir=files_dir, zip=False)
 
-print("Base Dir: " + str(base_dir))
-print("Files Dir: " + str(files_dir))
-print("Filename: " + str(filename))
-
-if os.path.exists(files_dir):
-    fs.join(fromdir=files_dir, tofile=filename,zip = False)
-else:
-    fs.split(fromfile=filename, todir=files_dir, zip = False)
+if __name__ == "__main__":
+    create_db()
+    clear_db()
