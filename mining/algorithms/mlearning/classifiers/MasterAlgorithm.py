@@ -35,7 +35,7 @@ class MasterAlgorithm:
             logm.info("\n[MASTER ALGORITHM] setup -> train: " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs
 
-    def train(self, tweets_train=None, save = False):
+    def train(self, tweets_train=MA_TWEETS_TRAIN, save = MA_TRAIN_SAVE):
         logtr.info("\n========================================================================"
                    "\n[MASTER ALGORITHM] Training\n"
                    "========================================================================\n")
@@ -80,7 +80,7 @@ class MasterAlgorithm:
         return scores
 
 
-    def predict(self,tweets_predict=None, load=False):
+    def predict(self,tweets_predict=MA_TWEETS_PREDICT, load=MA_PREDICT_LOAD):
         dt = time()
         if self.labels == None or self.features == None:
             self.setup()

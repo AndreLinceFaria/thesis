@@ -11,11 +11,15 @@ import utils.file_utils as fu
 def join(path1,path2):
     return str(os.path.join(path1,path2))
 
+def clean_dirs():
+    fu.remove_from_dir(CLASS_LOGS_DIR)
+    fu.remove_from_dir(CLASS_MODELS_DIR)
+    fu.remove_from_dir(FIGURES_DIR)
 # ======================
 # Files and Directories
 # ======================
 
-CLEAN_DIRS = True
+CLEAN_DIRS = False
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -28,9 +32,7 @@ CLASS_LOGS_DIR = os.path.join(BASE_DIR,"static/results/logs/")
 FIGURES_DIR = join(BASE_DIR,"static/results/figures/")
 
 if CLEAN_DIRS:
-    fu.remove_from_dir(CLASS_LOGS_DIR)
-    fu.remove_from_dir(CLASS_MODELS_DIR)
-    fu.remove_from_dir(FIGURES_DIR)
+    clean_dirs()
 
 # === Figures ===
 
@@ -107,5 +109,5 @@ MA_TRAIN_SAVE = True
 MA_TWEETS_PREDICT = 10
 MA_PREDICT_LOAD = True
 
-MA_DECISION = 'average'
+MA_DECISION = 'weighted'
 
