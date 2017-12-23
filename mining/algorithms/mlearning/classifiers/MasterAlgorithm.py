@@ -6,6 +6,7 @@ from mining.algorithms.mlearning.classifiers.NBayes import NBayes
 from mining.algorithms.mlearning.classifiers.NNet import NNet
 from mining.algorithms.mlearning.classifiers.KNN import KNN
 from mining.algorithms.mlearning.classifiers.SVM import SVM
+from mining.algorithms.mlearning.classifiers.LR import LR
 from sklearn.model_selection import StratifiedKFold
 import mining.algorithms.mlearning.feature as f
 import mining.algorithms.mlearning.persist as p
@@ -30,7 +31,7 @@ class MasterAlgorithm:
         logm.info("Features: " + str(self.features))
         logm.info("Labels: " + str(self.labels))
         if algs==None or not isinstance(algs, list):
-            self.algorithms = [NNet(), NBayes(), KNN()]
+            self.algorithms = [NNet(), NBayes(), KNN(),LR()]
         else:
             logm.info("\n[MASTER ALGORITHM] setup -> train: " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs

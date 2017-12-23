@@ -12,3 +12,4 @@ youtub
 youtu
 insta
 instagram
+@(\w+)
