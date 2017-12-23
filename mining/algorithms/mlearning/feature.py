@@ -14,10 +14,10 @@ rk = rake.Rake()
 
 session = getSession(DB)
 
-def get_tweets(count,table=TweetParty, cbu = True):
+def get_tweets_party(count):
     if not count or count==None:
-        return session.query(table).all()
-    elif cbu: #if count by user (Around 40 distinct users. nr of tweets fetch should be 40 * count.
+        return session.query(TweetParty).all()
+    elif COUNT_BY_USER: #if count by user (Around 40 distinct users. nr of tweets fetch should be 40 * count.
         users = session.execute("SELECT DISTINCT(username) FROM tweet_party")
         tweets = []
         for user in users:
@@ -25,10 +25,7 @@ def get_tweets(count,table=TweetParty, cbu = True):
         logm.info("Fetched " + str(count) + " Random tweets per party which resulted in " + str(len(tweets)) + " tweets in Total")
         return tweets
     else:
-        return session.query(table).filter().limit(count).all()
-
-if __name__ == "__main__":
-    get_tweets(count=400,cbu=True)
+        return session.query(TweetParty).filter().limit(count).all()
 
 def get_user_tweets(count):
     if not count or count==None:
@@ -48,7 +45,7 @@ def rakec(content):
     raked_text = rs.remove_regex(raked_text)
     return raked_text
 
-def format_tweets(tweets):
+def format_tweets_party(tweets):
     logm.info("Formatting " + str(len(tweets)) + " tweets...")
     tlist = []
     i = 0
@@ -75,14 +72,13 @@ def format_tweets(tweets):
             missed_tweets +=1
 
     logm.info("\n##########\nFormated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.\n ###########")
-
     return tlist
 
 class FeatureManager():
 
     def get_features_most_common(self, tweets, nr_features):
         logm.info("Generating features...")
-        tweets = format_tweets(tweets=tweets)
+        tweets = format_tweets_party(tweets=tweets)
         words = []
         for t in tweets:
             words += t[0].split()
@@ -107,7 +103,7 @@ class DatasetManager():
 
     def get_ds_XY(self, tweets, features, labels_list):
 
-        tweets_formated = format_tweets(tweets)
+        tweets_formated = format_tweets_party(tweets)
 
         N = len(tweets_formated)
         F = len(features)
@@ -129,10 +125,10 @@ class DatasetManager():
     def get_ds_X(self, tweets, features):
         tweets_formated = tweets
         if isinstance(tweets, list):
-            tweets_formated = format_tweets(tweets)
+            tweets_formated = format_tweets_party(tweets)
 
         F = len(features)
-
+        # Formatting party tweets
         if isinstance(tweets_formated, list):
             N = len(tweets_formated)
             X = np.zeros((N, F))
@@ -146,6 +142,7 @@ class DatasetManager():
                         f = features.index(word)
                         X[n][f] += 1
             return X
+        #Formatting user tweets
         elif isinstance(tweets_formated, str) or isinstance(tweets_formated, unicode):
             raked_tweets = rakec(tweets_formated)
             X = np.zeros(F)

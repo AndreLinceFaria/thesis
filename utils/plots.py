@@ -90,15 +90,15 @@ def plot_predictions_per_label(data, labels,save_as):
     plt.savefig(path)
 
 
-def plot_predictions_per_alg(data, labels,save_as):
-    algs = data.pop(0)[2:]
+def plot_predictions_per_alg(data, labels,algs,save_as):
+    algs_pred = data.pop(0)[2:]
 
     fig = plt.figure()
     fig.canvas.set_window_title("Predictions per Label/Algorithms")
     ax = fig.add_subplot(111)
-    N = len(algs)
+    N = len(algs_pred)
 
-    results_final = np.zeros((len(labels), len(algs)))
+    results_final = np.zeros((len(labels), len(algs_pred)))
     for entry in data:
         entry = entry[2:]
         for i in range(0, len(entry)):

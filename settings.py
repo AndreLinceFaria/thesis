@@ -67,7 +67,8 @@ REMOVE_LIMITS = True
 LIMITS_PERCENTAGE = 0.1
 
 # === RAKE ===
-
+CANDIDATE_THRESHOLD = 20
+CANDIDATES_TO_DISCARD = 0.2
 REGEX_FILE = join(BASE_DIR,"static/config/rake/regex.txt")
 STOPWORDS_FILE = join(BASE_DIR,"static/config/rake/stopwords-pt.txt")
 
@@ -111,3 +112,4 @@ MA_PREDICT_LOAD = True
 
 MA_DECISION = 'weighted'
 
+COUNT_BY_USER = True

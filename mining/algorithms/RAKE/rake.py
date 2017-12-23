@@ -149,7 +149,7 @@ class Rake(object):
         return sorted_keywords
 
 def get_top_scoring_candidates(keywords):
-    if len(keywords) >=15:
-        return keywords[0:len(keywords) / 2]
+    if len(keywords) >=CANDIDATE_THRESHOLD:
+        return keywords[0:int(len(keywords) * (1-CANDIDATES_TO_DISCARD))]
     else:
         return keywords[0:len(keywords)]

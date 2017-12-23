@@ -25,12 +25,12 @@ class MasterAlgorithm:
         self.latest_scores = None
 
     def setup(self, fntg=MA_FEATURES_NR_TWEETS_GROUP, fnf=MA_FEATURES_NR_FEATURES, algs = MA_ALGS):
-        self.features = fm.get_features_most_common(tweets=f.get_tweets(count=fntg,cbu=True), nr_features=fnf)
+        self.features = fm.get_features_most_common(tweets=f.get_tweets_party(count=fntg), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
         logm.info("Features: " + str(self.features))
         logm.info("Labels: " + str(self.labels))
         if algs==None or not isinstance(algs, list):
-            self.algorithms = [NNet(), NBayes(), KNN(), SVM()]
+            self.algorithms = [NNet(), NBayes(), KNN()]
         else:
             logm.info("\n[MASTER ALGORITHM] setup -> train: " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs
@@ -44,7 +44,7 @@ class MasterAlgorithm:
             self.setup()
 
         self.cv = StratifiedKFold(n_splits=len(self.labels), shuffle=True)
-        X, Y = dm.get_ds_XY(tweets=f.get_tweets(tweets_train), features=self.features, labels_list=self.labels)
+        X, Y = dm.get_ds_XY(tweets=f.get_tweets_party(tweets_train), features=self.features, labels_list=self.labels)
 
         # Uncoment to generate chart
         plots.plot_learning_curve(estimator=self.algorithms,title=None,X=X,y=Y,cv=self.cv,n_jobs=1,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
@@ -117,14 +117,13 @@ class MasterAlgorithm:
                 x = dm.get_ds_X(tweet.text, self.features)
                 pred, label = alg.predict_with_label(x, self.labels)
                 tmp_list[idx] = label
-                logm.info("\n########################################################################################################\n"
-                          "[Prediction] [USER: " + tweet.username + " ] [RESULT: " + label + " ]\n" + ""
-                        "############################################################################################################"
-                            "\n[TEXT] \n"
-                        "------------------------------------------------------------------------------------------------------------\n"
-                         + tweet.text + "\n\n")
+            logm.info(
+                "\n########################################################################################################\n"
+                "[Prediction] [USER: " + tweet.username + " ] [RESULT: " + self.__decideClass(tmp_list) + " ]\n" + ""
+                "############################################################################################################"
+                "\n[TEXT - length] " + str(len(tweet.text)) + "\n\n")
 
-            table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(tmp_list,decision='weighted')])
+            table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(tmp_list)])
             final_results.append([i,tweet.username] + tmp_list)
             i+=1
         logts.info("\n" + str(table))
@@ -141,7 +140,7 @@ class MasterAlgorithm:
         logts.info("\n" + str(table_final))
 
         plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
-        #plots.plot_predictions_per_alg(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
+        plots.plot_predictions_per_alg(data = final_results,labels=self.labels,algs=[alg.name for alg in self.algorithms],save_as=FIGURES_SAVE_AS_FORMAT)
 
     def __decideClass(self,data,decision=MA_DECISION):
         if decision == 'average':

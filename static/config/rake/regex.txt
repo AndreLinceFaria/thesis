@@ -10,3 +10,5 @@ https
 html
 youtub
 youtu
+insta
+instagram
