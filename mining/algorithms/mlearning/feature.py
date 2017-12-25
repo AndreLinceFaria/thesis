@@ -22,6 +22,7 @@ def get_tweets_party(count):
         tweets = []
         for user in users:
             [tweets.append(t) for t in session.execute("SELECT tp.* FROM tweet_party tp WHERE tp.username = \"" + ud._unidecode(user.username) + "\" ORDER BY RANDOM() LIMIT " + str(count))]
+            #[tweets.append(t) for t in session.execute('SELECT tp.tweetId, tp.username as username, GROUP_CONCAT(tp.text,"' '") as text FROM tweet_party tp WHERE tp.username = "' + ud._unidecode(user.username) + '" ORDER BY RANDOM() LIMIT ' + str(count))]
         logm.info("Fetched " + str(count) + " Random tweets per party which resulted in " + str(len(tweets)) + " tweets in Total")
         return tweets
     else:
@@ -71,7 +72,7 @@ def format_tweets_party(tweets):
         else:
             missed_tweets +=1
 
-    logm.info("\n##########\nFormated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.\n ###########")
+    logm.info("\n##########\nFormated " + str(i) + " correct tweets. Missed: " + str(missed_tweets) + " tweets.\n###########")
     return tlist
 
 class FeatureManager():

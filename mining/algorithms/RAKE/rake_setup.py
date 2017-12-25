@@ -12,7 +12,7 @@ def custom_regex(filename=REGEX_FILE):
                 regext.append(word)
     return regext
 
-@exit_after(10)
+@exit_after(TIMEOUT_RAKE)
 def remove_regex(text):
     try:
         tmp = text

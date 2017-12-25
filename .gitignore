@@ -104,4 +104,6 @@ ENV/
 
 .idea/
 **/database.sqlite
-/static/results/
+/static/results/figures/*
+/static/results/logs/*
+/static/results/models/*

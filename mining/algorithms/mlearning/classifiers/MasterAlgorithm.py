@@ -36,7 +36,7 @@ class MasterAlgorithm:
             logm.info("\n[MASTER ALGORITHM] setup -> train: " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs
 
-    def train(self, tweets_train=MA_TWEETS_TRAIN, save = MA_TRAIN_SAVE):
+    def train(self, tweets_train=MA_TWEETS_TRAIN, save = MA_TRAIN_SAVE, load_previous = MA_TRAIN_LOAD_PREV):
         logtr.info("\n========================================================================"
                    "\n[MASTER ALGORITHM] Training\n"
                    "========================================================================\n")
@@ -44,7 +44,13 @@ class MasterAlgorithm:
         if self.labels == None or self.features == None:
             self.setup()
 
-        self.cv = StratifiedKFold(n_splits=len(self.labels), shuffle=True)
+        if load_previous:
+            for alg in self.algorithms:
+                model = p.load_model(join(CLASS_MODELS_DIR, alg.name))
+                if model != None:
+                    alg.clf = model
+
+        self.cv = StratifiedKFold(n_splits=SKF_N_SPLITS, shuffle=SKF_SHUFFLE)
         X, Y = dm.get_ds_XY(tweets=f.get_tweets_party(tweets_train), features=self.features, labels_list=self.labels)
 
         # Uncoment to generate chart

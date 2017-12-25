@@ -11,4 +11,4 @@ class NBayes(Classifier):
             self.create()
 
     def create(self):
-        self.clf = MultinomialNB()
+        self.clf = MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True)

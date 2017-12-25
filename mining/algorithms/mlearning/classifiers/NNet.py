@@ -11,4 +11,8 @@ class NNet(Classifier):
             self.create()
 
     def create(self):
-        self.clf = MLPClassifier(solver=NN_SOLVER, alpha=NN_ALPHA,hidden_layer_sizes=NN_HIDDEN_LAYERS_SIZE, random_state=NN_RANDOM_STATE)
+        self.clf = MLPClassifier(solver=NN_SOLVER,
+                                 alpha=NN_ALPHA,
+                                 hidden_layer_sizes=NN_HIDDEN_LAYERS_SIZE,
+                                 random_state=NN_RANDOM_STATE,
+                                 activation=NN_ACTIVATION)

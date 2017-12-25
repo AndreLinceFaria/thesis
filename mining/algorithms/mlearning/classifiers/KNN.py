@@ -1,6 +1,7 @@
 from settings import *
 from mining.algorithms.mlearning.classifiers.Classifier import Classifier
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+
 
 class KNN(Classifier):
     def __init__(self, fname=None, n_neighbours = KNN_NEIGHBOURS_COUNT):
@@ -12,4 +13,4 @@ class KNN(Classifier):
             self.create()
 
     def create(self):
-        self.clf = KNeighborsClassifier(self.n_neighbours)
+        self.clf = KNeighborsClassifier(n_neighbors=self.n_neighbours,weights='distance',algorithm='auto')

@@ -60,23 +60,25 @@ PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitt
 # Algorithms
 # ======================
 
-FEATURE_STEMMING = True
+FEATURE_STEMMING = False
 FEATURE_SYNSET = False # not configured
 
 REMOVE_LIMITS = True
 LIMITS_PERCENTAGE = 0.1
 
 # === RAKE ===
-CANDIDATE_THRESHOLD = 20
-CANDIDATES_TO_DISCARD = 0.2
+TIMEOUT_RAKE = 30
+CANDIDATE_THRESHOLD = 100
+CANDIDATES_TO_DISCARD = 0.3
 REGEX_FILE = join(BASE_DIR,"static/config/rake/regex.txt")
-STOPWORDS_FILE = join(BASE_DIR,"static/config/rake/stopwords-pt.txt")
+STOPWORDS_FILES = [join(BASE_DIR,"static/config/rake/stopwords-pt.txt"),
+                   join(BASE_DIR,"static/config/rake/stopwords-en.txt")]
 
 # === KNN ===
 
 KNN_NAME = "K-Nearest Neighbours"
 
-KNN_NEIGHBOURS_COUNT = 25
+KNN_NEIGHBOURS_COUNT = 7
 
 
 # === NBayes ===
@@ -86,10 +88,11 @@ NB_NAME = "Naive Bayes"
 # === NNet ===
 
 NN_NAME = "Multi-Layer Perceptron"
-NN_SOLVER = 'lbfgs'
+NN_SOLVER = 'lbfgs' #sgd
 NN_ALPHA = 1e-5
-NN_HIDDEN_LAYERS_SIZE = (5,2)
-NN_RANDOM_STATE = 0
+NN_HIDDEN_LAYERS_SIZE = (7,4)
+NN_RANDOM_STATE = 1
+NN_ACTIVATION = 'relu'
 
 # === SVM ===
 
@@ -98,18 +101,27 @@ SVM_SVC_RANDOM_STATE = 0
 SVM_SVC_KERNEL = 'rbf'
 SVM_NEIGHBOURS_COUNT = 30
 
+# === LR (Mult) ===
+
+LR_NAME = "Multinomial Logistic Regression"
 
 # === Master ALgorithm ===
 
-MA_FEATURES_NR_TWEETS_GROUP = 500
-MA_FEATURES_NR_FEATURES = 50
+MA_FEATURES_NR_TWEETS_GROUP = 80
+MA_FEATURES_NR_FEATURES = 100
 MA_ALGS = None
 
-MA_TWEETS_TRAIN = 100
+MA_TWEETS_TRAIN = 200
 MA_TRAIN_SAVE = True
-MA_TWEETS_PREDICT = 10
+MA_TRAIN_LOAD_PREV = False
+MA_TWEETS_PREDICT = 1000
 MA_PREDICT_LOAD = True
 
 MA_DECISION = 'weighted'
 
 COUNT_BY_USER = True
+
+# === Stratified KF ===
+
+SKF_N_SPLITS = 5
+SKF_SHUFFLE = True

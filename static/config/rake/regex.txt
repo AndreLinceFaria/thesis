@@ -13,3 +13,15 @@ youtu
 insta
 instagram
 @(\w+)
+php
+pic
+fb
+twitter
+facebook
+in
+to
+via
+bit
+sapo
+annio
+fo

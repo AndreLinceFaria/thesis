@@ -9,6 +9,7 @@ import operator
 
 from utils.timeouts import exit_after
 from settings import *
+import unicodedata
 
 debug = False
 test = False
@@ -63,7 +64,6 @@ def split_sentences(text):
 
 
 def build_stop_word_regex(stop_word_file_path):
-    #print(stop_word_file_path)
     stop_word_list = []
     if isinstance(stop_word_file_path, list):
         for file_path in stop_word_file_path:
@@ -73,7 +73,8 @@ def build_stop_word_regex(stop_word_file_path):
     stop_word_regex_list = []
     for word in stop_word_list:
         word_regex = r'\b' + word + r'(?![\w-])'  # added look ahead for hyphen
-        stop_word_regex_list.append(word_regex)
+        word_regex_no_accent = r'\b' + unicodedata.normalize('NFD', unicode(word,'UTF-8')).encode('ascii', 'ignore') + r'(?![\w-])'
+        stop_word_regex_list.extend([word_regex,word_regex_no_accent])
     stop_word_pattern = re.compile('|'.join(stop_word_regex_list), re.IGNORECASE)
     return stop_word_pattern
 
@@ -127,15 +128,12 @@ def generate_candidate_keyword_scores(phrase_list, word_score):
         keyword_candidates[phrase] = candidate_score
     return keyword_candidates
 
-import os
-
-
 class Rake(object):
-    def __init__(self, stop_words_path=STOPWORDS_FILE):
+    def __init__(self, stop_words_path=STOPWORDS_FILES):
         self.stop_words_path = stop_words_path
         self.__stop_words_pattern = build_stop_word_regex(stop_words_path)
 
-    @exit_after(10)
+    @exit_after(TIMEOUT_RAKE)
     def run(self, text):
         sentence_list = split_sentences(text)
 

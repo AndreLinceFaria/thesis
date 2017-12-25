@@ -2,10 +2,11 @@ from mining.algorithms.mlearning.classifiers.MasterAlgorithm import MasterAlgori
 from settings import *
 from dbm import create_db, clear_db
 
-alg = None
+
 def init():
     alg = MasterAlgorithm()
     alg.setup()
+    return alg
 
 if __name__ == "__main__":
     try:
@@ -13,13 +14,11 @@ if __name__ == "__main__":
         print("\n1-train\n2-predict\n3-train & predict\n4-clear results\n5-end\n")
         choice = raw_input("your choice: ")
         if choice=="1":
-            init()
-            alg.train()
+            init().train()
         elif choice=="2":
-            init()
-            alg.predict()
+            init().predict()
         elif choice=="3":
-            init()
+            alg = init()
             alg.train()
             alg.predict()
         elif choice=="4":
