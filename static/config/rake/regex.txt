@@ -18,10 +18,10 @@ pic
 fb
 twitter
 facebook
-in
-to
-via
-bit
-sapo
-annio
-fo
+/ in /g
+/ to /g
+/ via /g
+/ bit /g
+/ sapo /g
+/ annio /g
+/ fo /g

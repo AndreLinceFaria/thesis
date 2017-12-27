@@ -107,3 +107,7 @@ ENV/
 /static/results/figures/*
 /static/results/logs/*
 /static/results/models/*
+
+!/static/results/figures/.gitkeep
+!/static/results/logs/.gitkeep
+!/static/results/models/.gitkeep
