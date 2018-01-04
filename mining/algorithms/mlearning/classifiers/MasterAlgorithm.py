@@ -194,7 +194,7 @@ class MasterAlgorithm:
                     "============================================================================================================\n\n"
                 )
 
-                expected_label = user.label if user_text.label!='' else user_text.label
+                expected_label = user.label if user_text.label=='' or user_text.label=="" or user_text.label==None else user_text.label
                 table.append_row([user.username,user_text.text[0:20]+"..."] + tmp_list + [self.__decideClass(tmp_list)] + [expected_label])
                 i+=1
         logts.info("\n" + str(table))
