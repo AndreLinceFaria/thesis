@@ -84,17 +84,18 @@ SUPPRESS_WARNINGS = True
 # === KNN ===
 
 KNN_NAME = "K-Nearest Neighbours"
-
+KNN_INITIALS = "KNN"
 KNN_NEIGHBOURS_COUNT = 7
 
 
 # === NBayes ===
 
 NB_NAME = "Naive Bayes"
-
+NB_INITIALS = "NB"
 # === NNet ===
 
 NN_NAME = "Multi-Layer Perceptron"
+NN_INITIALS = "MLP"
 NN_SOLVER = 'lbfgs' #sgd
 NN_ALPHA = 1e-5
 NN_HIDDEN_LAYERS_SIZE = (7,4)
@@ -104,6 +105,7 @@ NN_ACTIVATION = 'relu'
 # === SVM ===
 
 SVM_NAME = "Support Vector Machine"
+SVM_INITIALS = "SVM"
 SVM_SVC_RANDOM_STATE = 0
 SVM_SVC_KERNEL = 'rbf'
 SVM_NEIGHBOURS_COUNT = 30
@@ -111,6 +113,7 @@ SVM_NEIGHBOURS_COUNT = 30
 # === LR (Mult) ===
 
 LR_NAME = "Multinomial Logistic Regression"
+LR_INITIALS = "MLR"
 
 # === Master ALgorithm ===
 
@@ -122,7 +125,7 @@ MA_TWEETS_TRAIN = 200
 MA_TRAIN_SAVE = True
 MA_TRAIN_LOAD_PREV = False
 MA_TWEETS_PREDICT = 10
-MA_PREDICT_LOAD = False
+MA_PREDICT_LOAD = True
 
 MA_DECISION = 'weighted'
 
