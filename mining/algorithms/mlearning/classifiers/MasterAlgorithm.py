@@ -26,6 +26,9 @@ class MasterAlgorithm:
         self.latest_scores = None
 
     def setup(self, fntg=MA_FEATURES_NR_TWEETS_GROUP, fnf=MA_FEATURES_NR_FEATURES, algs = MA_ALGS):
+        logm.info("\n========================================================================"
+                   "\n[MASTER ALGORITHM] Setup\n"
+                   "========================================================================\n")
         self.features = fm.get_features_most_common(tweets=f.get_tweets_party(count=fntg), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
         logm.info("Features: " + str(self.features))
@@ -92,9 +95,9 @@ class MasterAlgorithm:
         if self.labels == None or self.features == None:
             self.setup()
 
-        logts.info("\n========================================================================"
+        logts.info("\n============================================================================================================"
                    "\n[MASTER ALGORITHM] Prediction\n"
-                   "========================================================================\n")
+                   "============================================================================================================\n")
         if load:
             for alg in self.algorithms:
                 model = p.load_model(join(CLASS_MODELS_DIR,alg.name))
@@ -117,18 +120,23 @@ class MasterAlgorithm:
             del tweets[:limit_remove]
 
         i = 0
+
         for tweet in tweets:
             tmp_list = [''] * len(self.algorithms)
+            x = dm.get_ds_X(tweet.text, self.features)
             for alg in self.algorithms:
                 idx = self.algorithms.index(alg)
-                x = dm.get_ds_X(tweet.text, self.features)
                 pred, label = alg.predict_with_label(x, self.labels)
                 tmp_list[idx] = label
+
+            active_features = lu.get_features_prediction(x, self.features)
             logm.info(
-                "\n########################################################################################################\n"
-                "[Prediction] [USER: " + tweet.username + " ] [RESULT: " + self.__decideClass(tmp_list) + " ]\n" + ""
-                "############################################################################################################"
-                "\n[TEXT - length] " + str(len(tweet.text)) + "\n\n")
+                "\n============================================================================================================\n" +
+                "User: " + tweet.username + "\nResult: " + self.__decideClass(tmp_list) + "\n\n" +
+                "Text Length = " + str(len(tweet.text)) + "\n\n" +
+                "Active Features (Count, Feature) [Total: " + str(len(active_features)) +"]\n\n" + str(active_features) + "\n\n" +
+                "============================================================================================================\n\n"
+            )
 
             table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(tmp_list)])
             final_results.append([i,tweet.username] + tmp_list)
