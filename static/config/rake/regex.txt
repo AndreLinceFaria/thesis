@@ -1,3 +1,4 @@
+((http[s]?|ftp):\/)?\/?([^:\/]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?
 (pic.twitter|youtube|goo.gl)\S*
 https?://.*?\\s+
 \S*(//)\S*
@@ -18,10 +19,6 @@ pic
 fb
 twitter
 facebook
-/ in /g
-/ to /g
-/ via /g
-/ bit /g
-/ sapo /g
-/ annio /g
-/ fo /g
+\sin\s
+\sto\s
+\svia\s
