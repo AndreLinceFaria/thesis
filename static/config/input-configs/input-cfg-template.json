@@ -1,7 +1,30 @@
 [
 	{
-		"username":"S. Mendes",
-        "text":"O actual paradigma económico centrado na economia do crescimento conduz-nos inevitavelmente a uma nova idade das trevas em termos econômicos. É não não são perigosos revolucionários que o afirmam é o Finantial Times. É a solução : Diversidade, diversidade nos modelos diversidade nos mercados e sobretudo à enorme diversidade da transição para a economia da sustentabilidade. A bem ou a mal ..... Isso é mais 'minudência' da 4a revolução industrial a acontecer em marcha acelerada.",
-		"label":"PS"
+		"username": "S. Mendes",
+		"label":"PS",
+		"texts": [
+			{
+				"text": "O actual paradigma económico centrado na economia do crescimento conduz-nos inevitavelmente a uma nova idade das trevas em termos econômicos. É não não são perigosos revolucionários que o afirmam é o Finantial Times. É a solução : Diversidade, diversidade nos modelos diversidade nos mercados e sobretudo à enorme diversidade da transição para a economia da sustentabilidade. A bem ou a mal ..... Isso é mais 'minudência' da 4a revolução industrial a acontecer em marcha acelerada.",
+				"label": "PS"
+			},
+			{
+				"text": "O PSD nao sabe o que faz. viva o PS",
+				"label": "PS"
+			}
+		]
+	},
+	{
+		"username": "User 2",
+		"label":"PCP",
+		"texts": [
+			{
+				"text": "O actual paradigma económico centrado na economia do crescimento conduz-nos inevitavelmente a uma nova idade das trevas em termos econômicos. É não não são perigosos revolucionários que o afirmam é o Finantial Times. É a solução : Diversidade, diversidade nos modelos diversidade nos mercados e sobretudo à enorme diversidade da transição para a economia da sustentabilidade. A bem ou a mal ..... Isso é mais 'minudência' da 4a revolução industrial a acontecer em marcha acelerada.",
+				"label": "PCP"
+			},
+			{
+				"text": "O PSD nao sabe o que faz. viva o PS",
+				"label": ""
+			}
+		]
 	}
 ]
