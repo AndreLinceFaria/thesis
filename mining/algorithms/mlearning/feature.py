@@ -36,10 +36,12 @@ def get_user_tweets(count):
 def get_ptParser():
     return PartiesTwitterParser()
 
+import warnings
+
 def rakec(content):
-    tkw = rake.get_top_scoring_candidates(
-        rk.run(
-            ud._unidecode(content)))
+    if SUPPRESS_WARNINGS:
+        warnings.filterwarnings("ignore")
+    tkw = rake.get_top_scoring_candidates(rk.run(ud._unidecode(content)))
     raked_text = ""
     for tstr in [x[0] for x in tkw]:
         raked_text += tstr + " "
