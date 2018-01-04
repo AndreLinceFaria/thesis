@@ -54,11 +54,17 @@ logm = log.get_log('main_log',join(CLASS_LOGS_DIR,MAIN_LOG_FORMAT),global_log=GL
 
 CONFIG_1_JSON = join(BASE_DIR,"static/config/parties-config/parties-config-1.json")
 RESULTS_CSV =join(BASE_DIR,"static/config/autarquicas17-resultados.csv")
-PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter.json")
+PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter-cfg-1.json")
+
+# === User input Configs ===
+
+USER_INPUT_CONFIG_JSON = join(BASE_DIR,"static/config/input-configs/input-cfg-template.json")
 
 # ======================
 # Algorithms
 # ======================
+
+GET_MATCHES = False
 
 FEATURE_STEMMING = False
 FEATURE_SYNSET = False # not configured
@@ -74,6 +80,7 @@ REGEX_FILE = join(BASE_DIR,"static/config/rake/regex.txt")
 STOPWORDS_FILES = [join(BASE_DIR,"static/config/rake/stopwords-pt.txt"),
                    join(BASE_DIR,"static/config/rake/stopwords-en.txt")]
 
+SUPPRESS_WARNINGS = True
 # === KNN ===
 
 KNN_NAME = "K-Nearest Neighbours"
@@ -114,8 +121,8 @@ MA_ALGS = None
 MA_TWEETS_TRAIN = 200
 MA_TRAIN_SAVE = True
 MA_TRAIN_LOAD_PREV = False
-MA_TWEETS_PREDICT = 1000
-MA_PREDICT_LOAD = True
+MA_TWEETS_PREDICT = 10
+MA_PREDICT_LOAD = False
 
 MA_DECISION = 'weighted'
 
