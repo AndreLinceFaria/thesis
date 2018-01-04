@@ -24,7 +24,7 @@ class ResultsParser():
                 mandatos += int(row['MANDATOS'])
                 listParties.append(party)
             self.results.append(
-                Result(camaras,votos,votantes,presidentes,maiorias,concelhos,mandatos, listParties)
+                self.Result(camaras,votos,votantes,presidentes,maiorias,concelhos,mandatos, listParties)
             )
 
         totalVotos = 0
@@ -35,17 +35,17 @@ class ResultsParser():
             result.votosRecalc = result.votos / float(totalVotos)
 
 
-class Result():
-    def __init__(self,camaras,votos, votantes, presidentes,maiorias, concelhos, mandatos, listParties):
-        self.camaras = camaras #label
-        self.votos = votos
-        self.votantes = votantes
-        self.presidentes = presidentes
-        self.maiorias = maiorias
-        self.concelhos = concelhos
-        self.mandatos = mandatos
-        self.listParties = listParties
-        self.votosRecalc = -1
+    class Result():
+        def __init__(self,camaras,votos, votantes, presidentes,maiorias, concelhos, mandatos, listParties):
+            self.camaras = camaras #label
+            self.votos = votos
+            self.votantes = votantes
+            self.presidentes = presidentes
+            self.maiorias = maiorias
+            self.concelhos = concelhos
+            self.mandatos = mandatos
+            self.listParties = listParties
+            self.votosRecalc = -1
 
 class PartiesConfig():
 
@@ -62,24 +62,24 @@ class PartiesConfig():
             for party in obj['parties']:
                 parties.append(party)
             self.configs.append(
-                Config(label, parties)
+                self.Config(label, parties)
             )
 
-class Config():
-    def __init__(self, labelname, parties):
-        self.labelname = labelname
-        self.parties = parties
+    class Config():
+        def __init__(self, labelname, parties):
+            self.labelname = labelname
+            self.parties = parties
 
-    def hasParty(self, party):
-        if party in self.parties:
-            return True
-        return False
+        def hasParty(self, party):
+            if party in self.parties:
+                return True
+            return False
 
-    def getLabel(self):
-        return self.labelname
+        def getLabel(self):
+            return self.labelname
 
-    def getParties(self):
-        return self.parties
+        def getParties(self):
+            return self.parties
 
 
 class PartiesTwitterParser():
@@ -92,9 +92,9 @@ class PartiesTwitterParser():
     def setup(self):
         parties = self.parser.getJsonData()
         for party in parties:
-            pobj = Party(party['name'].encode('utf-8'),party['username'].encode('utf-8'))
+            pobj = self.Party(party['name'].encode('utf-8'),party['username'].encode('utf-8'))
             for user in party['users']:
-                pobj.pusers.append(PartyUser(user['name'].encode('utf-8'),user['username'].encode('utf-8')))
+                pobj.pusers.append(self.PartyUser(user['name'].encode('utf-8'),user['username'].encode('utf-8')))
             self.parties.append(pobj)
 
     def getLabelFromUsername(self,username):
@@ -113,14 +113,43 @@ class PartiesTwitterParser():
         return lst
 
 
-class Party():
-    def __init__(self, pname, pusername):
-        self.pname = pname.decode('utf-8')
-        self.pusername = pusername.decode('utf-8')
-        self.pusers = []
+    class Party():
+        def __init__(self, pname, pusername):
+            self.pname = pname.decode('utf-8')
+            self.pusername = pusername.decode('utf-8')
+            self.pusers = []
 
 
-class PartyUser:
-    def __init__(self, name, username):
-        self.name = name.decode('utf-8')
-        self.username = username.decode('utf-8')
+    class PartyUser:
+        def __init__(self, name, username):
+            self.name = name.decode('utf-8')
+            self.username = username.decode('utf-8')
+
+
+class UserInputConfigParser():
+    def __init__(self, filename=USER_INPUT_CONFIG_JSON):
+        self.parser = ParserJSON(file=filename)
+        self.users = []
+        self.setup()
+
+    def setup(self):
+        users_config = self.parser.getJsonData()
+        for user in users_config:
+            username = user['username'].encode('utf-8')
+            label = user['label'].encode('utf-8')
+            texts = []
+            for text_config in user['texts']:
+                texts.append(self.UserText(text_config['label'].encode('utf-8'),text_config['text'].encode('utf-8')))
+            if len(texts) > 0:
+                self.users.append(self.User(username,label,texts))
+
+    class User():
+        def __init__(self,username, label,texts):
+            self.username = username
+            self.label = label
+            self.texts = texts
+
+    class UserText():
+        def __init__(self, label, text):
+            self.label = label
+            self.text = text
