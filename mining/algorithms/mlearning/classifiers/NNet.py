@@ -4,7 +4,7 @@ from mining.algorithms.mlearning.classifiers.Classifier import Classifier
 
 class NNet(Classifier):
     def __init__(self, fname=None):
-        super(NNet, self).__init__(name=NN_NAME)
+        super(NNet, self).__init__(name=NN_NAME,initials=NN_INITIALS)
         if fname!=None:
             super(NNet,self).load(fname)
         else:

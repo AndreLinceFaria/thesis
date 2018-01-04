@@ -3,10 +3,11 @@ from settings import *
 
 class Classifier(object):
 
-    def __init__(self, name, desc='Not provided'):
+    def __init__(self, name, desc='Not provided', initials='Not provided'):
         self.name = name
         self.desc = desc
         self.clf = None
+        self.initials = initials
 
     def load(self, fname):
         self.clf = p.load_model(join(CLASS_MODELS_DIR, fname))

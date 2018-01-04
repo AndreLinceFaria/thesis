@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 
 class LR(Classifier):
     def __init__(self, fname=None):
-        super(LR, self).__init__(name=LR_NAME)
+        super(LR, self).__init__(name=LR_NAME,initials=LR_INITIALS)
         if fname!=None:
             super(LR,self).load(fname)
         else:
