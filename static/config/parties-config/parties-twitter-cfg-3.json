@@ -1,0 +1,194 @@
+[
+	{
+		"name":"Centro",
+		"username":"",
+		"users":[
+            {
+                "name":"PSD",
+		        "username":"ppdpsd"
+            },
+			{
+				"name":"Pedro Passos Coelho",
+				"username":"passoscoelho"
+			},
+			{
+				"name":"José Pedro Aguiar Branco",
+				"username":"aguiarbranco"
+			},
+			{
+				"name":"Antonio Leitao Amaro",
+				"username":"Leitao_Amaro"
+			},
+			{
+				"name":"Pedro Pimpao",
+				"username":"ppimpao"
+			},
+			{
+				"name":"Duarte Marques",
+				"username":"DuarteMarques"
+			},
+			{
+				"name":"Carlos Coelho",
+				"username":"CarlosCoelhoPE"
+			},
+                        {
+				"name":"Jorge Bacelar Gouveia",
+				"username":"JBacelarGouveia"
+			},
+                        {
+				"name":"Pedro Santana Lopes",
+				"username":"PSantanaLopes"
+			},
+            {
+                "name":"PS",
+		        "username":"psocialista"
+            },
+            {
+				"name":"Joao Galamba",
+				"username":"Joaogalamba"
+			},
+			{
+				"name":"Ana Gomes",
+				"username":"AnaGomesMEP"
+			},
+			{
+				"name":"Antonio Costa",
+				"username":"antoniocostapm"
+			},
+			{
+				"name":"Fernado Medina",
+				"username":"FMedina_PCML"
+			},
+			{
+				"name":"Pedro Nuno Santos",
+				"username":"pnsantos_seap"
+			},
+			{
+				"name":"Tiago Barbosa Ribeiro",
+				"username":"tbribeiro"
+			},
+			{
+				"name":"Andre Pinotes Batista",
+				"username":"aapbatista"
+			},
+			{
+				"name":"JS Lisboa",
+				"username":"JSLisboa"
+			}
+
+		]
+	},
+	{
+		"name":"Direita",
+		"username":"",
+		"users":[
+            {
+                "name":"CDS-PP",
+                "username":"_CDSPP"
+            },
+			{
+				"name":"Jose Ribeiro e Castro",
+				"username":"ribeiroecastro"
+			},
+			{
+				"name":"Assuncao Cristas",
+				"username":"CristasAssuncao"
+			},
+			{
+				"name":"Telmo Correia",
+				"username":"Telmo_Correia"
+			},
+			{
+				"name":"Helder Amaral",
+				"username":"helderamaralcds"
+			},
+			{
+				"name":"Diogo Feio",
+				"username":"diogo_feio"
+			}
+		]
+	},
+	{
+		"name":"Esquerda",
+		"username":"",
+		"users":[
+            {
+                "name":"BE",
+		        "username":"EsquerdaNet"
+            },
+			{
+				"name":"Catarina Martins",
+				"username":"catarina_mart"
+			},
+			{
+				"name":"Marisa Matias",
+				"username":"mmatias_"
+			},
+			{
+				"name":"Joana Mortagua",
+				"username":"JoanaMortagua"
+			},
+			{
+				"name":"Mariana Mortagua",
+				"username":"MRMortagua"
+			},
+			{
+				"name":"Pedro Filipe Soares",
+				"username":"PedroFgSoares"
+			},
+            {
+                "name":"PAN",
+		        "username":"Partido_PAN"
+            },
+            {
+                "name":"PAN",
+                "username":"Partido_PAN"
+            },
+            {
+                "name":"André Nunes",
+                "username":"nunoandrebnunes"
+            },
+            {
+                "name":"Filipe Pimentel",
+                "username":"ftpimentel"
+            },
+            {
+                "name":"PCP-PEV",
+                "username": "_pcp_"
+            },
+            {
+				"name":"PCP Aveiro",
+				"username":"PCP_Aveiro"
+			},
+			{
+				"name":"Bruno Dias",
+				"username":"brunoramosdias"
+			},
+			{
+				"name":"Antonio Filipe",
+				"username":"AntonioFilipe"
+			},
+                        {
+				"name":"Abril Novo Magazine",
+				"username":"abrildenovo"
+			},
+                        {
+				"name":"Miguel Tiago",
+				"username":"migueltiago"
+			},
+                        {
+				"name":"CDU PCP-PEV",
+				"username":"CDUPCPPEV"
+			},
+                        {
+				"name":"José M Gonçalves (CDU)",
+				"username":"JMRGoncalves1"
+			},
+            {
+				"name":"Os Verdes",
+				"username":"OsVerdes"
+			}
+
+		]
+	}
+]
