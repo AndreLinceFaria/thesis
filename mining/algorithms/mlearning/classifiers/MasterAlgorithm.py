@@ -148,7 +148,7 @@ class MasterAlgorithm:
         logts.info("\n" + str(table))
 
         results_final = [0] * len(self.labels)
-        for party in list(table['Final (Average)']):
+        for party in list(table["Final"]):
             results_final[int(self.labels.index(party))] += 1
 
         table_final = BeautifulTable()
