@@ -211,7 +211,7 @@ class MasterAlgorithm:
             else:
                 return self.__decideClass(data,decision="weighted")
         else:
-            logts.info("Not possible to decide with WEIGHTED logic, there are no train results. Using 'average' method.")
+            logts.info("Not possible to decide with [" + decision + "] logic, there are no train results. Using 'average' method.")
             return self.__decideClass(data, 'average')
 
 if __name__ == "__main__":

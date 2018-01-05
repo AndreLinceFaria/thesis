@@ -43,9 +43,12 @@ def rakec(content):
         warnings.filterwarnings("ignore")
     regex_content = cr.remove_regex(content) #remove custom regex from regex.txt
     tkw = rake.get_top_scoring_candidates(rk.run(ud._unidecode(regex_content)))
-    raked_text = ""
+    raked_text = []
     for tstr in [x[0] for x in tkw]:
-        raked_text += tstr + " "
+        if RAKE_ACTIVE:
+            raked_text.append(tstr)
+        else:
+            raked_text.extend(tstr.split(" "))
     return raked_text
 
 def format_tweets_party(tweets):
@@ -70,6 +73,9 @@ def format_tweets_party(tweets):
                 tlist.append(
                     tup
                 )
+            else:
+                logm.info("id: " + str(i) + " tid: " + str(tweet.tweetId))
+                logm.info("Rake failed")
             i+=1
         else:
             missed_tweets +=1
@@ -84,7 +90,8 @@ class FeatureManager():
         tweets = format_tweets_party(tweets=tweets)
         words = []
         for t in tweets:
-            words += t[0].split()
+            for expression in t[0]:
+                words.append(expression)
 
         if FEATURE_STEMMING:
             words = wpt.STEMMER.stem_word_list(words)
@@ -116,7 +123,7 @@ class DatasetManager():
 
         for tweet in tweets_formated:
             n = tweets_formated.index(tweet)
-            words_in_tweet = tweet[0].split()
+            words_in_tweet = tweet[0]
             for word in words_in_tweet:
                 if word in features:
                     f = features.index(word)
@@ -137,7 +144,7 @@ class DatasetManager():
             X = np.zeros((N, F))
             for tweet in tweets_formated:
                 n = tweets_formated.index(tweet)
-                words_in_tweet = tweet[0].split()
+                words_in_tweet = tweet[0]
                 for word in words_in_tweet:
                     if FEATURE_STEMMING:
                         word = wpt.STEMMER.stem_word(word)
@@ -149,7 +156,7 @@ class DatasetManager():
         elif isinstance(tweets_formated, str) or isinstance(tweets_formated, unicode):
             raked_tweets = rakec(tweets_formated)
             X = np.zeros(F)
-            words_in_text = raked_tweets.split()
+            words_in_text = raked_tweets
             for word in words_in_text:
                 if FEATURE_STEMMING:
                     word = wpt.STEMMER.stem_word(word)

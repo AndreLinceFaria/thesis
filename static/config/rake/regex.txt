@@ -15,3 +15,4 @@
 # words that appear frequently and convey nothing
 (http|https|html)
 (\s?rt\s|\srt\s?|\s?via\s)
+(\s?<<\s)
