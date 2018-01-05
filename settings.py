@@ -127,7 +127,7 @@ MA_TRAIN_LOAD_PREV = False
 MA_TWEETS_PREDICT = 10
 MA_PREDICT_LOAD = True
 
-MA_DECISION = 'weighted'
+MA_DECISION = 'odd-weighted'
 
 COUNT_BY_USER = True
 

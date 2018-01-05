@@ -21,7 +21,19 @@ def get_features_prediction(x_input, features):
     else:
         raise ValueError("lists not equal")
 
+def discardLowestOnEven(l,scores):
+    l.pop(scores.index(min(scores)))
+    scores.pop(scores.index(min(scores)))
+    res = accumulate(zip(l, scores))
+    if scores[1:] != scores[:-1]:
+        max = get_max(res)
+        return max[0]
+    else:
+        return l[scores.index(max(scores))]
 
 if __name__ == '__main__':
-    res = get_features_prediction([[1,3,0.0,0,2]],['k','k','nok','nok','g'])
+    labels = ['PS','BE','PSP','CDS']
+    scores = [0.6,0.3,0.4,0.4]
+    #res = get_features_prediction([[1,3,0.0,0,2]],['k','k','nok','nok','g'])
+    res = discardLowestOnEven(labels,scores)
     print(res)

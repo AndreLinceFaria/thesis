@@ -59,7 +59,6 @@ class MasterAlgorithm:
         self.cv = StratifiedKFold(n_splits=SKF_N_SPLITS, shuffle=SKF_SHUFFLE)
         X, Y = dm.get_ds_XY(tweets=f.get_tweets_party(tweets_train), features=self.features, labels_list=self.labels)
 
-        # Uncoment to generate chart
         plots.plot_learning_curve(estimator=self.algorithms,title=None,X=X,y=Y,cv=self.cv,n_jobs=1,save_as="[" + datetime.datetime.today().strftime('%Y-%m-%d %H-%M') + "].png")
 
         table = BeautifulTable()
@@ -206,6 +205,11 @@ class MasterAlgorithm:
             res = lu.accumulate(zip(data,self.latest_scores))
             mx = lu.get_max(res)
             return mx[0]
+        elif decision == 'odd-weighted' and self.latest_scores!=None:
+            if len(data)%2==0: # alg count is even
+                return lu.discardLowestOnEven(data,self.latest_scores)
+            else:
+                return self.__decideClass(data,decision="weighted")
         else:
             logts.info("Not possible to decide with WEIGHTED logic, there are no train results. Using 'average' method.")
             return self.__decideClass(data, 'average')
