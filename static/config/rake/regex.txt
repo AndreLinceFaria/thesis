@@ -1,24 +1,17 @@
-((http[s]?|ftp):\/)?\/?([^:\/]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?
-(pic.twitter|youtube|goo.gl)\S*
-https?://.*?\\s+
-\S*(//)\S*
-\S*(\\)\S*
-\S*(\/)\S*
-(www)\S*
-\S*(.com|.pt)\S*
-http
-https
-html
-youtub
-youtu
-insta
-instagram
-@(\w+)
-php
-pic
-fb
-twitter
-facebook
-\sin\s
-\sto\s
-\svia\s
+# hyperlinks/url with one space after // (for broken links in twitter
+((http|ftp|https):\/\/\s?)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
+
+# match hyperlink remainder
+# ([-a-zA-Z0-9@:%._\+~#=]{2,256})*(\s?\/{1,2})([-a-zA-Z0-9@:%._\+~#=]{2,256})*
+(\s?\/{1,2})([-a-zA-Z0-9@:%._\+~#=]{2,256})*
+
+# references and hastags
+(@(\w+))
+(#(\w+))
+
+# numbers
+([0-9]+)
+
+# words that appear frequently and convey nothing
+(http|https|html)
+(\s?rt\s|\srt\s?|\s?via\s)
