@@ -2,7 +2,7 @@ from settings import *
 from data.database.database import getSession, TweetParty
 from data.utils.parserUtil import PartiesTwitterParser
 import mining.algorithms.RAKE.rake as rake
-import mining.algorithms.RAKE.rake_setup as rs
+import mining.algorithms.RAKE.custom_regex as cr
 import unidecode as ud
 import numpy as np
 from collections import Counter
@@ -41,11 +41,11 @@ import warnings
 def rakec(content):
     if SUPPRESS_WARNINGS:
         warnings.filterwarnings("ignore")
-    tkw = rake.get_top_scoring_candidates(rk.run(ud._unidecode(content)))
+    regex_content = cr.remove_regex(content) #remove custom regex from regex.txt
+    tkw = rake.get_top_scoring_candidates(rk.run(ud._unidecode(regex_content)))
     raked_text = ""
     for tstr in [x[0] for x in tkw]:
         raked_text += tstr + " "
-    raked_text = rs.remove_regex(raked_text)
     return raked_text
 
 def format_tweets_party(tweets):
