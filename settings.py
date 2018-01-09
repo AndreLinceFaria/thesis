@@ -54,11 +54,11 @@ logm = log.get_log('main_log',join(CLASS_LOGS_DIR,MAIN_LOG_FORMAT),global_log=GL
 
 CONFIG_1_JSON = join(BASE_DIR,"static/config/parties-config/parties-config-1.json")
 RESULTS_CSV =join(BASE_DIR,"static/config/autarquicas17-resultados.csv")
-PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter-cfg-1.json")
+PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter-cfg-2.json")
 
 # === User input Configs ===
 
-USER_INPUT_CONFIG_JSON = join(BASE_DIR,"static/config/input-configs/input-cfg-template.json")
+USER_INPUT_CONFIG_JSON = join(BASE_DIR,"static/config/input-configs/input-cfg-template-2.json")
 
 # ======================
 # Algorithms
@@ -88,12 +88,13 @@ SUPPRESS_WARNINGS = True
 KNN_NAME = "K-Nearest Neighbours"
 KNN_INITIALS = "KNN"
 KNN_NEIGHBOURS_COUNT = 7
-
+KNN_FNAME = None
 
 # === NBayes ===
 
 NB_NAME = "Naive Bayes"
 NB_INITIALS = "NB"
+NB_FNAME = None
 # === NNet ===
 
 NN_NAME = "Multi-Layer Perceptron"
@@ -103,6 +104,7 @@ NN_ALPHA = 1e-5
 NN_HIDDEN_LAYERS_SIZE = (7,4)
 NN_RANDOM_STATE = 1
 NN_ACTIVATION = 'relu'
+NN_FNAME = None
 
 # === SVM ===
 
@@ -111,12 +113,13 @@ SVM_INITIALS = "SVM"
 SVM_SVC_RANDOM_STATE = 0
 SVM_SVC_KERNEL = 'rbf'
 SVM_NEIGHBOURS_COUNT = 30
+SVM_FNAME = None
 
 # === LR (Mult) ===
 
 LR_NAME = "Multinomial Logistic Regression"
 LR_INITIALS = "MLR"
-
+LR_FNAME = None
 # === Master ALgorithm ===
 
 MA_FEATURES_NR_TWEETS_GROUP = 80

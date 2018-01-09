@@ -1,5 +1,8 @@
 from data.utils.parserUtil import UserInputConfigParser
 from settings import *
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 import datetime
 from mining.algorithms.mlearning.classifiers.NBayes import NBayes
@@ -189,12 +192,13 @@ class MasterAlgorithm:
                     "\n============================================================================================================\n"
                     "User: " + user.username + "\nResult: " + self.__decideClass(tmp_list) + "\n\n"
                     "Text Length = " + str(len(user_text.text)) + "\n\n"
-                    "Active Features (Count, Feature) [Total: " + str(len(active_features)) + "]\n\n" + str(active_features) + "\n"
+                    "Active Features (Count, Feature) [Total: " + str(len(active_features)) + "]\n\n" + str(active_features)+"\n"
                     "============================================================================================================\n\n"
                 )
 
                 expected_label = user.label if user_text.label=='' or user_text.label=="" or user_text.label==None else user_text.label
-                table.append_row([user.username,user_text.text[0:20]+"..."] + tmp_list + [self.__decideClass(tmp_list)] + [expected_label])
+                row = [user.username,str(user_text.text[0:20]+"...")] + tmp_list + [self.__decideClass(tmp_list)] + [expected_label]
+                table.append_row(row)
                 i+=1
         logts.info("\n" + str(table))
 

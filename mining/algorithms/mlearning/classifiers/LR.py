@@ -3,7 +3,7 @@ from mining.algorithms.mlearning.classifiers.Classifier import Classifier
 from sklearn.linear_model import LogisticRegression
 
 class LR(Classifier):
-    def __init__(self, fname=None):
+    def __init__(self, fname=LR_FNAME):
         super(LR, self).__init__(name=LR_NAME,initials=LR_INITIALS)
         if fname!=None:
             super(LR,self).load(fname)

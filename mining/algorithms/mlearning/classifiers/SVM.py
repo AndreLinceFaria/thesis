@@ -4,7 +4,7 @@ from sklearn.svm import SVC
 from mining.algorithms.mlearning.classifiers.Classifier import Classifier
 
 class SVM(Classifier):
-    def __init__(self, fname=None, n_neighbours = SVM_NEIGHBOURS_COUNT):
+    def __init__(self, fname=SVM_FNAME, n_neighbours = SVM_NEIGHBOURS_COUNT):
         self.n_neighbours = n_neighbours
         super(SVM, self).__init__(name=SVM_NAME,initials=SVM_INITIALS)
         if fname!=None:
