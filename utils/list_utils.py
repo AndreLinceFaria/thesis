@@ -26,8 +26,8 @@ def discardLowestOnEven(l,scores):
     scores.pop(scores.index(min(scores)))
     res = accumulate(zip(l, scores))
     if scores[1:] != scores[:-1]:
-        max = get_max(res)
-        return max[0]
+        mx = get_max(res)
+        return mx[0]
     else:
         return l[scores.index(max(scores))]
 

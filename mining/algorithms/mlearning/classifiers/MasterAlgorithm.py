@@ -8,7 +8,6 @@ import datetime
 from mining.algorithms.mlearning.classifiers.NBayes import NBayes
 from mining.algorithms.mlearning.classifiers.NNet import NNet
 from mining.algorithms.mlearning.classifiers.KNN import KNN
-from mining.algorithms.mlearning.classifiers.SVM import SVM
 from mining.algorithms.mlearning.classifiers.LR import LR
 from sklearn.model_selection import StratifiedKFold
 import mining.algorithms.mlearning.feature as f
@@ -131,22 +130,31 @@ class MasterAlgorithm:
             tmp_list = [''] * len(self.algorithms)
             x = dm.get_ds_X(tweet.text, self.features)
             for alg in self.algorithms:
+                print(str(self.algorithms.index(alg)) + " : " + alg.initials)
                 idx = self.algorithms.index(alg)
                 pred, label = alg.predict_with_label(x, self.labels)
                 tmp_list[idx] = label
 
+            print(tmp_list)
+            print(len(tmp_list))
+
             active_features = lu.get_features_prediction(x, self.features)
             logm.info(
                 "\n============================================================================================================\n" +
-                "User: " + tweet.username + "\nResult: " + self.__decideClass(tmp_list) + "\n\n" +
+                "User: " + tweet.username + "\nResult: " + self.__decideClass(list(tmp_list)) + "\n\n" +
                 "Text Length = " + str(len(tweet.text)) + "\n\n" +
                 "Active Features (Count, Feature) [Total: " + str(len(active_features)) +"]\n\n" + str(active_features) + "\n\n" +
                 "============================================================================================================\n"
             )
 
-            table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(tmp_list)])
+            print("Row header: " + str(len(table.column_headers)))
+            print("new row: " + str(len([i,tweet.username] + tmp_list + [self.__decideClass(list(tmp_list))])))
+
+            table.append_row([i,tweet.username] + tmp_list + [self.__decideClass(list(tmp_list))])
             final_results.append([i,tweet.username] + tmp_list)
             i+=1
+            print(tmp_list)
+            print(len(tmp_list))
         logts.info("\n" + str(table))
 
         results_final = [0] * len(self.labels)
@@ -161,7 +169,7 @@ class MasterAlgorithm:
         logts.info("\n" + str(table_final))
 
         plots.plot_predictions_per_label(data = final_results, labels=self.labels,save_as=FIGURES_SAVE_AS_FORMAT)
-        plots.plot_predictions_per_alg(data = final_results,labels=self.labels,algs=[alg.name for alg in self.algorithms],save_as=FIGURES_SAVE_AS_FORMAT)
+        plots.plot_predictions_per_alg(data = final_results,labels=self.labels,algs=[alg.initials for alg in self.algorithms],save_as=FIGURES_SAVE_AS_FORMAT)
 
     def predict_by_config(self,load=MA_PREDICT_LOAD):
         if load:
@@ -197,7 +205,7 @@ class MasterAlgorithm:
                 )
 
                 expected_label = user.label if user_text.label=='' or user_text.label=="" or user_text.label==None else user_text.label
-                row = [user.username,str(user_text.text[0:20]+"...")] + tmp_list + [self.__decideClass(tmp_list)] + [expected_label]
+                row = [user.username,str(user_text.text[0:20]+"...")] + tmp_list + [self.__decideClass(list(tmp_list))] + [expected_label]
                 table.append_row(row)
                 i+=1
         logts.info("\n" + str(table))
