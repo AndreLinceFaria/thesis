@@ -1,6 +1,7 @@
 from settings import *
 from data.database.database import getSession, TweetParty
 from data.utils.parserUtil import PartiesTwitterParser
+import utils.file_utils as futils
 import mining.algorithms.RAKE.rake as rake
 import mining.algorithms.RAKE.custom_regex as cr
 import unidecode as ud
@@ -31,6 +32,9 @@ def get_tweets_party(count):
 def get_user_tweets(count):
     if not count or count==None:
         return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username')
+    elif FROM_USERS_FILE:
+        user_list = futils.users_from_file(USERS_FILE)
+        return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet WHERE username IN ' + str(tuple(user_list)) + ' GROUP BY tweet.username LIMIT :count',{'count':len(user_list)})
     return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username LIMIT :count',{'count':count})
 
 def get_ptParser():

@@ -1,4 +1,5 @@
-import os,shutil
+import shutil
+from settings import *
 
 readsize = 1024
 bytes = 99000000
@@ -47,12 +48,18 @@ def join(fromdir, tofile, zip=False, remove_dir = True):
         shutil.rmtree(fromdir)
 
 
-def remove_from_dir(dir):
+def remove_from_dir(dir,exception):
     for file in os.listdir(dir):
         file_path = os.path.join(dir, file)
         try:
-            if os.path.isfile(file_path):
+            if os.path.isfile(file_path) and exception not in file:
                 os.unlink(file_path)
             elif os.path.isdir(file_path): shutil.rmtree(file_path)
         except Exception as e:
             print(e)
+
+def users_from_file(filename):
+    with open(filename) as f:
+        content = f.readlines()
+    content = [x.strip() for x in content]
+    return content

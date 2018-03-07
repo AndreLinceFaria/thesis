@@ -12,9 +12,9 @@ def join(path1,path2):
     return str(os.path.join(path1,path2))
 
 def clean_dirs():
-    fu.remove_from_dir(CLASS_LOGS_DIR)
-    fu.remove_from_dir(CLASS_MODELS_DIR)
-    fu.remove_from_dir(FIGURES_DIR)
+    fu.remove_from_dir(CLASS_LOGS_DIR,".gitkeep")
+    fu.remove_from_dir(CLASS_MODELS_DIR,".gitkeep")
+    fu.remove_from_dir(FIGURES_DIR,".gitkeep")
 # ======================
 # Files and Directories
 # ======================
@@ -59,6 +59,9 @@ PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitt
 # === User input Configs ===
 
 USER_INPUT_CONFIG_JSON = join(BASE_DIR,"static/config/input-configs/input-cfg-template.json")
+
+FROM_USERS_FILE = True
+USERS_FILE = join(BASE_DIR,"static/config/input-configs/users.txt")
 
 # ======================
 # Algorithms
@@ -122,14 +125,14 @@ LR_INITIALS = "MLR"
 LR_FNAME = None
 # === Master ALgorithm ===
 
-MA_FEATURES_NR_TWEETS_GROUP = 80
+MA_FEATURES_NR_TWEETS_GROUP = 100
 MA_FEATURES_NR_FEATURES = 100
 MA_ALGS = None
 
 MA_TWEETS_TRAIN = 200
 MA_TRAIN_SAVE = True
 MA_TRAIN_LOAD_PREV = False
-MA_TWEETS_PREDICT = 10
+MA_TWEETS_PREDICT = 36
 MA_PREDICT_LOAD = True
 
 MA_DECISION = 'weighted'

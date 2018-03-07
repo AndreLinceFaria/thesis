@@ -37,7 +37,7 @@ class MasterAlgorithm:
         logm.info("Features: " + str(self.features))
         logm.info("Labels: " + str(self.labels))
         if algs==None or not isinstance(algs, list):
-            self.algorithms = [NNet(), NBayes(), KNN(),LR()]
+            self.algorithms = [NNet(), NBayes(),LR()]
         else:
             logm.info("\n[MASTER ALGORITHM] setup -> train: " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs
