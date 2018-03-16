@@ -172,6 +172,6 @@ class DatasetManager():
             raise ValueError("Wrong input to function. Neither string nor list.")
 
 
-    def get_ds_train_test(self, X, Y, test_size=0.25):
-        X_Train, X_Test, Y_Train, Y_Test = train_test_split(X, Y, test_size=test_size, random_state=42)
+    def get_ds_train_test(self, X, Y, test_size=0.20):
+        X_Train, X_Test, Y_Train, Y_Test = train_test_split(X, Y, test_size=test_size, shuffle=True)
         return X_Train, X_Test, Y_Train, Y_Test

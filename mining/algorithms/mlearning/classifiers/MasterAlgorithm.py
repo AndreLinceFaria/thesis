@@ -1,4 +1,5 @@
 from data.utils.parserUtil import UserInputConfigParser
+from mining.algorithms.mlearning.classifiers.SVM import SVM
 from settings import *
 import sys
 reload(sys)
@@ -37,7 +38,7 @@ class MasterAlgorithm:
         logm.info("Features: " + str(self.features))
         logm.info("Labels: " + str(self.labels))
         if algs==None or not isinstance(algs, list):
-            self.algorithms = [NNet(), NBayes(),LR()]
+            self.algorithms = [SVM(), NBayes(),KNN(),NNet()]
         else:
             logm.info("\n[MASTER ALGORITHM] setup -> train: " + str(len(algs)) + " algorithm/s.")
             self.algorithms = algs
@@ -77,7 +78,6 @@ class MasterAlgorithm:
             for alg in self.algorithms:
                 alg.train(X_train, Y_train)
                 score = alg.test(X_test, Y_test)
-
                 scores[self.algorithms.index(alg)] = score
 
             table.append_row([str(i)] + [str(score) for score in scores])

@@ -54,7 +54,7 @@ logm = log.get_log('main_log',join(CLASS_LOGS_DIR,MAIN_LOG_FORMAT),global_log=GL
 
 CONFIG_1_JSON = join(BASE_DIR,"static/config/parties-config/parties-config-1.json")
 RESULTS_CSV =join(BASE_DIR,"static/config/autarquicas17-resultados.csv")
-PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter-cfg-1.json")
+PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter-cfg-DE.json")
 
 # === User input Configs ===
 
@@ -72,7 +72,7 @@ GET_MATCHES = False
 FEATURE_STEMMING = False
 FEATURE_SYNSET = False # not configured
 
-REMOVE_LIMITS = True
+REMOVE_LIMITS = False
 LIMITS_PERCENTAGE = 0.1
 
 # === RAKE ===
@@ -80,7 +80,7 @@ RAKE_ACTIVE = True
 #RAKE_RANDOM_CHOICE = False # -> mix between Rake ACTIVE/NON ACTIVE
 TIMEOUT_RAKE = 30
 CANDIDATE_THRESHOLD = 100
-CANDIDATES_TO_DISCARD = 0.3
+CANDIDATES_TO_DISCARD = 0
 REGEX_FILE = join(BASE_DIR,"static/config/rake/regex.txt")
 STOPWORDS_FILES = [join(BASE_DIR,"static/config/rake/stopwords-pt.txt"),
                    join(BASE_DIR,"static/config/rake/stopwords-en.txt")]
@@ -90,7 +90,7 @@ SUPPRESS_WARNINGS = True
 
 KNN_NAME = "K-Nearest Neighbours"
 KNN_INITIALS = "KNN"
-KNN_NEIGHBOURS_COUNT = 7
+KNN_NEIGHBOURS_COUNT = 10
 KNN_FNAME = None
 
 # === NBayes ===
@@ -104,9 +104,9 @@ NN_NAME = "Multi-Layer Perceptron"
 NN_INITIALS = "MLP"
 NN_SOLVER = 'lbfgs' #sgd
 NN_ALPHA = 1e-5
-NN_HIDDEN_LAYERS_SIZE = (7,4)
+NN_HIDDEN_LAYERS_SIZE = (5,3)
 NN_RANDOM_STATE = 1
-NN_ACTIVATION = 'relu'
+NN_ACTIVATION = 'logistic'
 NN_FNAME = None
 
 # === SVM ===
@@ -125,11 +125,11 @@ LR_INITIALS = "MLR"
 LR_FNAME = None
 # === Master ALgorithm ===
 
-MA_FEATURES_NR_TWEETS_GROUP = 100
-MA_FEATURES_NR_FEATURES = 100
+MA_FEATURES_NR_TWEETS_GROUP = 300
+MA_FEATURES_NR_FEATURES = 200 #200
 MA_ALGS = None
 
-MA_TWEETS_TRAIN = 200
+MA_TWEETS_TRAIN = 400 #400/500
 MA_TRAIN_SAVE = True
 MA_TRAIN_LOAD_PREV = False
 MA_TWEETS_PREDICT = 36
