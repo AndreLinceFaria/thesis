@@ -29,13 +29,13 @@ def get_tweets_party(count):
     else:
         return session.query(TweetParty).filter().limit(count).all()
 
-def get_user_tweets(count):
+def get_user_tweets(count, table=DB_TABLE,file=USERS_FILE):
     if not count or count==None:
-        return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username')
+        return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM ' + table + ' as tweet GROUP BY tweet.username')
     elif FROM_USERS_FILE:
-        user_list = futils.users_from_file(USERS_FILE)
-        return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet WHERE username IN ' + str(tuple(user_list)) + ' GROUP BY tweet.username LIMIT :count',{'count':len(user_list)})
-    return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM tweet GROUP BY tweet.username LIMIT :count',{'count':count})
+        user_list = futils.list_from_file(file)
+        return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM ' + table + ' as tweet WHERE username IN ' + str(tuple(user_list)) + ' GROUP BY tweet.username LIMIT :count',{'count':len(user_list)})
+    return session.execute('SELECT tweet.username as username, GROUP_CONCAT(tweet.text, "' '")as text FROM ' + table + ' as tweet GROUP BY tweet.username LIMIT :count',{'count':count})
 
 def get_ptParser():
     return PartiesTwitterParser()

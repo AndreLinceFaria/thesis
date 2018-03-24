@@ -16,9 +16,10 @@ if __name__ == "__main__":
               "2-predict\n"
               "3-predict using config file\n"
               "4-train & predict\n"
-              "5-train & predict using config file\n"
-              "6-clear results\n"
-              "7-exit\n"
+              "5-train & predict users and politicians\n"
+              "6-train & predict using config file\n"
+              "7-clear results\n"
+              "8-exit\n"
         )
         choice = raw_input("Choose an option: ")
         if choice=="1":
@@ -30,12 +31,17 @@ if __name__ == "__main__":
         elif choice=="4":
             alg = init()
             alg.train()
-            alg.predict()
-        elif choice == "5":
+            alg.predict(users_file_to_predict=USERS_FILE)
+        elif choice=="5":
+            alg = init()
+            #alg.train()
+            #alg.predict(users_file_to_predict=USERS_FILE, table='tweet')
+            alg.predict(users_file_to_predict=POLITICAL_USERS_FILE, table='tweet_party')
+        elif choice == "6":
             alg = init()
             alg.train()
             alg.predict_by_config()
-        elif choice=="6":
+        elif choice=="7":
             clean_dirs()
         else:
             clear_db()

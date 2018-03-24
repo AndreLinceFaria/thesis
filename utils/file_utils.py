@@ -58,7 +58,7 @@ def remove_from_dir(dir,exception):
         except Exception as e:
             print(e)
 
-def users_from_file(filename):
+def list_from_file(filename):
     with open(filename) as f:
         content = f.readlines()
     content = [x.strip() for x in content]

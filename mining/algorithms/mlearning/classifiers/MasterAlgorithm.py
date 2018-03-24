@@ -2,6 +2,7 @@ from data.utils.parserUtil import UserInputConfigParser
 from mining.algorithms.mlearning.classifiers.SVM import SVM
 from settings import *
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -17,6 +18,7 @@ from beautifultable import BeautifulTable
 import utils.plots as plots
 import utils.list_utils as lu
 import warnings
+import utils.file_utils as futils
 
 fm = f.FeatureManager()
 dm = f.DatasetManager()
@@ -33,7 +35,10 @@ class MasterAlgorithm:
         logm.info("\n========================================================================"
                    "\n[MASTER ALGORITHM] Setup\n"
                    "========================================================================\n")
-        self.features = fm.get_features_most_common(tweets=f.get_tweets_party(count=fntg), nr_features=fnf)
+        if(FEATURES_FROM_FILE):
+            self.features = futils.list_from_file(FEATURES_FILE)
+        else:
+            self.features = fm.get_features_most_common(tweets=f.get_tweets_party(count=fntg), nr_features=fnf)
         self.labels = f.get_ptParser().get_labels()
         logm.info("Features: " + str(self.features))
         logm.info("Labels: " + str(self.labels))
@@ -94,7 +99,7 @@ class MasterAlgorithm:
         return scores
 
 
-    def predict(self,tweets_predict=MA_TWEETS_PREDICT, load=MA_PREDICT_LOAD):
+    def predict(self,users_file_to_predict, table, tweets_predict=MA_TWEETS_PREDICT, load=MA_PREDICT_LOAD):
         if self.labels == None or self.features == None:
             self.setup()
 
@@ -109,7 +114,7 @@ class MasterAlgorithm:
                 else:
                     warnings.warm("No model found for " + alg.name)
 
-        tweets = f.get_user_tweets(tweets_predict)
+        tweets = f.get_user_tweets(tweets_predict,table=table,file=users_file_to_predict)
         table = BeautifulTable()
         table.column_headers = ["Index","Username"] + [alg.name for alg in self.algorithms] + ["Final"]
 
