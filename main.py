@@ -34,7 +34,7 @@ if __name__ == "__main__":
             alg.predict(users_file_to_predict=USERS_FILE)
         elif choice=="5":
             alg = init()
-            #alg.train()
+            alg.train()
             #alg.predict(users_file_to_predict=USERS_FILE, table='tweet')
             alg.predict(users_file_to_predict=POLITICAL_USERS_FILE, table='tweet_party')
         elif choice == "6":

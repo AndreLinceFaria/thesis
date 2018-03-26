@@ -99,7 +99,7 @@ class MasterAlgorithm:
         return scores
 
 
-    def predict(self,users_file_to_predict, table, tweets_predict=MA_TWEETS_PREDICT, load=MA_PREDICT_LOAD):
+    def predict(self,table=DB_TABLE, users_file_to_predict=None, tweets_predict=MA_TWEETS_PREDICT, load=MA_PREDICT_LOAD):
         if self.labels == None or self.features == None:
             self.setup()
 

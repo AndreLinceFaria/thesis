@@ -54,7 +54,7 @@ logm = log.get_log('main_log',join(CLASS_LOGS_DIR,MAIN_LOG_FORMAT),global_log=GL
 
 CONFIG_1_JSON = join(BASE_DIR,"static/config/parties-config/parties-config-1.json")
 RESULTS_CSV =join(BASE_DIR,"static/config/autarquicas17-resultados.csv")
-PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter-cfg-P.json")
+PARTIES_TWITTER_JSON = join(BASE_DIR,"static/config/parties-config/parties-twitter-cfg-DE.json")
 
 # === User input Configs ===
 
@@ -80,7 +80,7 @@ LIMITS_PERCENTAGE = 0.1
 RAKE_ACTIVE = False
 #RAKE_RANDOM_CHOICE = False # -> mix between Rake ACTIVE/NON ACTIVE
 TIMEOUT_RAKE = 30
-CANDIDATE_THRESHOLD = 100
+CANDIDATE_THRESHOLD = 250
 CANDIDATES_TO_DISCARD = 0
 REGEX_FILE = join(BASE_DIR,"static/config/rake/regex.txt")
 STOPWORDS_FILES = [join(BASE_DIR,"static/config/rake/stopwords-pt.txt"),
@@ -126,11 +126,11 @@ LR_INITIALS = "MLR"
 LR_FNAME = None
 # === Master ALgorithm ===
 
-MA_FEATURES_NR_TWEETS_GROUP = 300
-MA_FEATURES_NR_FEATURES = 200 #200
+MA_FEATURES_NR_TWEETS_GROUP = 350
+MA_FEATURES_NR_FEATURES = 250 #200
 MA_ALGS = None
 
-MA_TWEETS_TRAIN = 500 #400/500
+MA_TWEETS_TRAIN = 600 #400/500
 MA_TRAIN_SAVE = True
 MA_TRAIN_LOAD_PREV = False
 MA_TWEETS_PREDICT = None
@@ -140,7 +140,7 @@ MA_DECISION = 'weighted'
 
 COUNT_BY_USER = True
 
-FEATURES_FROM_FILE = False
+FEATURES_FROM_FILE = True
 FEATURES_FILE = join(BASE_DIR,"static/config/input-configs/features.txt")
 DB_TABLE = 'tweet'
 
