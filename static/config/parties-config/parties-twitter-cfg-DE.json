@@ -44,10 +44,6 @@
             "username":"_CDSPP"
          },
          {
-            "name":"PS",
-            "username":"psocialista"
-         },
-         {
             "name":"Jose Ribeiro e Castro",
             "username":"ribeiroecastro"
          },
@@ -66,38 +62,6 @@
          {
             "name":"Diogo Feio",
             "username":"diogo_feio"
-         },
-         {
-            "name":"Joao Galamba",
-            "username":"Joaogalamba"
-         },
-         {
-            "name":"Ana Gomes",
-            "username":"AnaGomesMEP"
-         },
-         {
-            "name":"Antonio Costa",
-            "username":"antoniocostapm"
-         },
-         {
-            "name":"Fernado Medina",
-            "username":"FMedina_PCML"
-         },
-         {
-            "name":"Pedro Nuno Santos",
-            "username":"pnsantos_seap"
-         },
-         {
-            "name":"Tiago Barbosa Ribeiro",
-            "username":"tbribeiro"
-         },
-         {
-            "name":"Andre Pinotes Batista",
-            "username":"aapbatista"
-         },
-         {
-            "name":"JS Lisboa",
-            "username":"JSLisboa"
          }
       ]
    },
@@ -105,6 +69,42 @@
       "name":"Esquerda",
       "username":"",
       "users":[
+         {
+            "name":"PS",
+		    "username":"psocialista"
+         },
+         {
+             "name":"Joao Galamba",
+             "username":"Joaogalamba"
+         },
+         {
+             "name":"Ana Gomes",
+             "username":"AnaGomesMEP"
+         },
+         {
+             "name":"Antonio Costa",
+             "username":"antoniocostapm"
+         },
+         {
+             "name":"Fernado Medina",
+             "username":"FMedina_PCML"
+         },
+         {
+             "name":"Pedro Nuno Santos",
+             "username":"pnsantos_seap"
+         },
+         {
+             "name":"Tiago Barbosa Ribeiro",
+             "username":"tbribeiro"
+         },
+         {
+             "name":"Andre Pinotes Batista",
+             "username":"aapbatista"
+         },
+         {
+             "name":"JS Lisboa",
+             "username":"JSLisboa"
+         },
          {
             "name":"PCP-PEV",
             "username":"_pcp_"

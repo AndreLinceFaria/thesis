@@ -77,7 +77,7 @@ REMOVE_LIMITS = False
 LIMITS_PERCENTAGE = 0.1
 
 # === RAKE ===
-RAKE_ACTIVE = False
+RAKE_ACTIVE = True
 #RAKE_RANDOM_CHOICE = False # -> mix between Rake ACTIVE/NON ACTIVE
 TIMEOUT_RAKE = 30
 CANDIDATE_THRESHOLD = 250
@@ -140,7 +140,7 @@ MA_DECISION = 'weighted'
 
 COUNT_BY_USER = True
 
-FEATURES_FROM_FILE = True
+FEATURES_FROM_FILE = False
 FEATURES_FILE = join(BASE_DIR,"static/config/input-configs/features.txt")
 DB_TABLE = 'tweet'
 
